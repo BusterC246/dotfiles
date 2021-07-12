@@ -123,7 +123,7 @@ screens = [
             ],
             24,
         ),
-        wallpaper='~/Pictures/sunset.png',
+        #wallpaper='Path/To/Wallpaper',
         wallpaper_mode='fill',
     ),
 ]
