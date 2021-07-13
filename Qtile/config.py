@@ -78,14 +78,14 @@ for i in groups:
     ])
 
 layouts = [
-    layout.Columns(border_focus='#03c03c'),
+    layout.Columns(border_focus='#98971a'),
     # layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
-     layout.Bsp(border_focus='#779ecb'),
+     layout.Bsp(border_focus='#458588'),
     # layout.Matrix(),
     # layout.MonadTall(),
-     layout.MonadWide(border_focus='#966fd6'),
+     layout.MonadWide(border_focus='#b16286'),
     # layout.RatioTile(),
     # layout.Tile(),
     # layout.TreeTab(),
@@ -110,7 +110,7 @@ screens = [
                 widget.WindowName(),
                 widget.Chord(
                     chords_colors={
-                        'launch': ("#ff0000", "#ffffff"),
+                        'launch': ("#cc241d", "#928374"),
                     },
                     name_transform=lambda name: name.upper(),
                 ),
@@ -122,8 +122,10 @@ screens = [
                #widget.QuickExit(),
             ],
             24,
+            foreground="ebdbb2",
+            background="#282828",
         ),
-        #wallpaper='Path/To/Wallpaper',
+        #wallpaper='Path/To/Image',
         wallpaper_mode='fill',
     ),
 ]
