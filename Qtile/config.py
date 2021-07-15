@@ -14,8 +14,6 @@ keys = [
     Key([mod], "s", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "t", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "n", lazy.layout.up(), desc="Move focus up"),
-    Key([mod], "space", lazy.next_layout(),
-        desc="Change layout"),
 
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
@@ -47,7 +45,7 @@ keys = [
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
 
     # Toggle between different layouts as defined below
-    Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
+    Key([mod], "space", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
 
     Key([mod, "control"], "r", lazy.restart(), desc="Restart Qtile"),
@@ -64,7 +62,7 @@ groups = [Group(i) for i in "123456789"]
 
 for i in groups:
     keys.extend([
-        # mod1 + letter of group = switch to group
+       #  mod1 + letter of group = switch to group
         Key([mod], i.name, lazy.group[i.name].toscreen(),
             desc="Switch to group {}".format(i.name)),
 
@@ -73,8 +71,8 @@ for i in groups:
             desc="Switch to & move focused window to group {}".format(i.name)),
         # Or, use below if you prefer not to switch to that group.
         # # mod1 + shift + letter of group = move focused window to group
-        # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-        #     desc="move focused window to group {}".format(i.name)),
+         Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
+             desc="move focused window to group {}".format(i.name)),
     ])
 
 layouts = [
@@ -82,10 +80,10 @@ layouts = [
     # layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
-     layout.Bsp(border_focus='#458588'),
+    layout.Bsp(border_focus='#458588'),
     # layout.Matrix(),
     # layout.MonadTall(),
-     layout.MonadWide(border_focus='#b16286'),
+    layout.MonadWide(border_focus='#b16286'),
     # layout.RatioTile(),
     # layout.Tile(),
     # layout.TreeTab(),
@@ -97,6 +95,8 @@ widget_defaults = dict(
     font='Roboto',
     fontsize=12,
     padding=3,
+    foreground="ebdbb2",
+    background="#282828",
 )
 extension_defaults = widget_defaults.copy()
 
@@ -114,18 +114,14 @@ screens = [
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-               #widget.TextBox("default config", name="default"),
-               #widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                widget.Systray(),
                #widget.Clock(format='%Y-%m-%d %a %I:%M %p'),
                #widget.Clock(format='%I:%M %p'),
                #widget.QuickExit(),
             ],
             24,
-            foreground="ebdbb2",
-            background="#282828",
         ),
-        #wallpaper='Path/To/Image',
+        wallpaper='/usr/share/wallpapers/sunset.png',
         wallpaper_mode='fill',
     ),
 ]
@@ -166,4 +162,4 @@ focus_on_window_activation = "smart"
 #
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
-wmname = "LG3D"
+wmname = "Qtile"
