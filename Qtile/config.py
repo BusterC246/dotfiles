@@ -50,12 +50,13 @@ keys = [
 
     Key([mod, "control"], "r", lazy.restart(), desc="Restart Qtile"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "r", lazy.spawncmd(),
+    Key([mod], "d", lazy.spawncmd(),
         desc="Spawn a command using a prompt widget"),
 
     # Spawn programs
     Key([mod], "a", lazy.spawn("brave")),
     Key([mod], "o", lazy.spawn("thunar")),
+    Key([mod], "e", lazy.spawn("pavucontrol")),
 ]
 
 groups = [Group(i) for i in "123456789"]
@@ -71,19 +72,30 @@ for i in groups:
             desc="Switch to & move focused window to group {}".format(i.name)),
         # Or, use below if you prefer not to switch to that group.
         # # mod1 + shift + letter of group = move focused window to group
-         Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-             desc="move focused window to group {}".format(i.name)),
+         #Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
+             #Sdesc="move focused window to group {}".format(i.name)),
     ])
 
 layouts = [
-    layout.Columns(border_focus='#98971a'),
-    # layout.Max(),
+    # layout.Columns(border_focus='#98971a'),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
-    layout.Bsp(border_focus='#458588'),
     # layout.Matrix(),
-    # layout.MonadTall(),
-    layout.MonadWide(border_focus='#b16286'),
+    layout.MonadTall(
+        border_focus='#98971a',
+        border_width=2,
+        single_border_width=0
+    ),
+    layout.Bsp(
+        border_focus='#689d6a',
+        border_width=2,
+    ),
+    layout.MonadWide(
+        border_focus='#458588',
+        border_width=2,
+        single_border_width=0
+    ),
+    layout.Max(),
     # layout.RatioTile(),
     # layout.Tile(),
     # layout.TreeTab(),
@@ -104,20 +116,14 @@ screens = [
     Screen(
         bottom=bar.Bar(
             [
-                widget.CurrentLayout(),
+                widget.CurrentLayoutIcon(),
                 widget.GroupBox(),
-                widget.Prompt(),
-                widget.WindowName(),
-                widget.Chord(
-                    chords_colors={
-                        'launch': ("#cc241d", "#928374"),
-                    },
-                    name_transform=lambda name: name.upper(),
+                widget.Prompt(
+                    ignore_dups_history=True,
+                    prompt="Spawn: ", 
                 ),
-               widget.Systray(),
-               #widget.Clock(format='%Y-%m-%d %a %I:%M %p'),
-               #widget.Clock(format='%I:%M %p'),
-               #widget.QuickExit(),
+                widget.TaskList(),
+                widget.Systray(),
             ],
             24,
         ),
