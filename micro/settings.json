@@ -1,0 +1,13 @@
+{
+    "backup": false,
+    "colorscheme": "gruvbox-tc",
+    "ignorecase": false,
+    "infobar": false,
+    "initlua": true,
+    "pluginchannels": [
+        "https://raw.githubusercontent.com/micro-editor/plugin-channel/master/channel.json"
+    ],
+    "pluginrepos": [],
+    "sucmd": "doas",
+    "tabstospaces": true
+}
