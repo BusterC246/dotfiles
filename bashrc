@@ -18,4 +18,4 @@ PS1='\[\033[1;32m\] \W \[\033[1;34m\]>\[\033[0m\] '
 . "$HOME/.cargo/env"
 
 # Text Editor
-export EDITOR=micro
+export EDITOR=vim
