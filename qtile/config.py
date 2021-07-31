@@ -126,8 +126,6 @@ screens = [
             ],
             24,
         ),
-        wallpaper='/usr/share/wallpapers/Gruvbox_City.png',
-        wallpaper_mode='fill',
     ),
 ]
 
