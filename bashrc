@@ -14,8 +14,5 @@ alias mc='micro'
 #PS1='\[\033[1;34m\]\u\[\033[1;32m\] \W \$\[\033[0m\] '
 PS1='\[\033[1;32m\] \W \[\033[1;34m\]>\[\033[0m\] '
 
-# Rust
-. "$HOME/.cargo/env"
-
 # Text Editor
 export EDITOR=vim
