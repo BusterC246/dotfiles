@@ -1,16 +1,14 @@
 call plug#begin()
-  Plug 'morhetz/gruvbox'
+  Plug 'gruvbox-community/gruvbox'
   Plug 'vim-airline/vim-airline'
-  Plug 'dense-analysis/ale'
   Plug 'tpope/vim-surround'
-  Plug 'tpope/vim-commentary'
   Plug 'jiangmiao/auto-pairs'
-  call plug#end()
+call plug#end()
+
+colorscheme gruvbox
+set termguicolors
 
 set number relativenumber
-set termguicolors
-autocmd vimenter * ++nested colorscheme gruvbox
-set background=dark
 
 " dvorak remap
 noremap h h

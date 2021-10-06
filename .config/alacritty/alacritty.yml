@@ -29,6 +29,22 @@
         cyan:    '0x8ec07c'
         white:   '0xebdbb2'
 
+
     font:
         normal:
-            family: Monospace
+            family: Roboto Mono for Powerline
+            style: Regular
+
+        bold:
+            family: Roboto Mono for Powerline
+            style: Bold
+
+        italic:
+            family: Roboto Mono for Powerline
+            style: Italic
+
+        bold_italic:
+            family: Roboto Mono for Powerline
+            style: Bold italic
+
+        size: 8
