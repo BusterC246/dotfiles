@@ -1,6 +1,6 @@
 {
     "backup": false,
-    "colorscheme": "gruvbox-tc",
+    "colorscheme": "gruvbox",
     "ignorecase": false,
     "infobar": false,
     "initlua": true,

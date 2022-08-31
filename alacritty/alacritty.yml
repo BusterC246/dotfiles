@@ -31,19 +31,19 @@ colors:
 
 font:
   normal:
-    family: Roboto Mono for Powerline
+    family: Jetbrains Mono
     style: Regular
 
   bold:
-    family: Roboto Mono for Powerline
+    family: Jetbrains Mono
     style: Bold
 
   italic:
-    family: Roboto Mono for Powerline
+    family: Jetbrains Mono
     style: Italic
 
   bold_italic:
-    family: Roboto Mono for Powerline
+    family: Jetbrains Mono
     style: Bold italic
 
-  size: 11
+  size: 12
