@@ -1,11 +1,6 @@
 Dependencies:
- - Roboto
- - Roboto-mono
- - Roboto-mono for powerline
+ - Jetbrains mono
  - Vim plugged
-
-Optional dependencies:
- - Gruvbox gtk theme
 
 Information:
  These dotfiles are themed around the gruvbox darker colorscheme. 
