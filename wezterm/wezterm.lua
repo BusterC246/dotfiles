@@ -14,12 +14,16 @@ return {
 	color_scheme = "Gruvbox Darker",
 	enable_tab_bar = false,
 	default_cursor_style = "SteadyBar",
-	animation_fps = 60,
+	term = "wezterm",
 	window_padding = {
 		left = 0,
 		right = 0,
 		top = 0,
 		bottom = 0,
 	},
+	freetype_load_target = "Normal",
 	check_for_updates = false,
+	animation_fps = 165,
+	front_end = "OpenGL",
+	prefer_egl = true,
 };
