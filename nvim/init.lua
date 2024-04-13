@@ -1,15 +1,4 @@
-local Plug = vim.fn['plug#'];
-vim.g.gruvbox_contrast_dark = 'hard';
-
--- Plugins
-vim.call('plug#begin', '~/.config/nvim/plugged');
-	Plug 'gruvbox-community/gruvbox';
-	Plug 'vim-airline/vim-airline';
-	Plug 'tpope/vim-surround';
-vim.call('plug#end');
-
 -- Apearance
-vim.cmd("colorscheme gruvbox");
 vim.o.termguicolors = true;
 vim.o.number = true;
 vim.o.relativenumber = true;
