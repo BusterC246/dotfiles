@@ -1,20 +1,17 @@
-term = "wezterm";
-
 local wezterm = require 'wezterm';
 
-local scheme = wezterm.get_builtin_color_schemes()["Gruvbox Dark"];
-scheme.background = "1d2021";
+-- local scheme = wezterm.get_builtin_color_schemes()["Gruvbox Dark"];
+-- scheme.background = "1d2021";
 
 wezterm.on('mux-is-process-stateful', function() return false end);
 
 return {
-	color_schemes = {
-		["Gruvbox Darker"] = scheme,
-	},
-	color_scheme = "Gruvbox Darker",
+	-- color_schemes = {
+		-- ["Gruvbox Darker"] = scheme,
+	-- },
 	enable_tab_bar = false,
 	default_cursor_style = "SteadyBar",
-	term = "wezterm",
+	term = "xterm-color",
 	window_padding = {
 		left = 0,
 		right = 0,
@@ -26,4 +23,5 @@ return {
 	animation_fps = 165,
 	front_end = "OpenGL",
 	prefer_egl = true,
+	enable_wayland = true,
 };

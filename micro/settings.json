@@ -1,13 +1,5 @@
 {
-    "backup": false,
-    "colorscheme": "gruvbox",
-    "ignorecase": false,
-    "infobar": false,
-    "initlua": true,
-    "pluginchannels": [
-        "https://raw.githubusercontent.com/micro-editor/plugin-channel/master/channel.json"
-    ],
-    "pluginrepos": [],
+    "colorscheme": "twilight",
     "sucmd": "doas",
     "tabstospaces": true
 }
