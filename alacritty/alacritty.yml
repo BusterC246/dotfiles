@@ -60,22 +60,22 @@ colors:
 
 font:
   normal:
-    family: Monaspace Neon
+    family: Jetbrains Mono
     style: Regular
 
-  bold:
-    family: Monaspace Neon SemiBold
-    style: Bold
-
-  italic:
-    family: Monaspace Neon Italic
-    style: Italic
-
-  bold_italic:
-    family: Monaspace Neon BoldItalic
-    style: Bold italic
-
-  size: 12
-
-shell:
-    program: /bin/bash
+#   bold:
+#     family:Jetbrains Mono Bold
+#     style: Bold
+# 
+#   italic:
+#     family: Jetbrains Mono Italic
+#     style: Italic
+# 
+#   bold_italic:
+#     family: Jetbrains Mono BoldItalic
+#     style: Bold italic
+# 
+  size: 13
+# 
+# shell:
+#     program: /bin/bash
