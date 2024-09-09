@@ -1,6 +1,6 @@
 Dependencies:
 - Jetbrains Mono Font
-- Adapta-Eta Color Scheme
+- Ayu Dark Color Scheme
 - Papirus Dark Icon Theme
 - Bibita-Modern-Classic Cursor Theme
 
