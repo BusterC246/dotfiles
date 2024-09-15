@@ -23,10 +23,10 @@ PS1="\[\033[1;32m\]\W \[\033[1;34m\]\$ \[\033[0m\]"
 
 export EDITOR="micro"
 export HISTCONTROL="ignoredups"
-export PATH="$PATH:~/.cargo/bin"
+export PATH="$PATH:~/.cargo/bin:/opt/idea-community/bin"
 
 # Directories
-export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
+export _JAVA_OPTIONS="-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java -Dawt.toolkit.name=WLToolkit"
 export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME"/bash-completion/bash_completion
 export DISCORD_USER_DATA_DIR="${XDG_DATA_HOME}"
 export FFMPEG_DATADIR="$XDG_CONFIG_HOME"/ffmpeg
@@ -49,9 +49,3 @@ export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
 export WINEPREFIX="/mnt/media/wine_prefixes/.wine"
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
-export XDG_CACHE_HOME=${XDG_CACHE_HOME:="$HOME/.cache"}
-export XDG_CONFIG_DIRS=/etc/xdg
-export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:="$HOME/.config"}
-export XDG_DATA_DIRS=/usr/local/share:/usr/share
-export XDG_DATA_HOME=${XDG_DATA_HOME:="$HOME/.local/share"}
-export XDG_STATE_HOME=$HOME/.local/state
