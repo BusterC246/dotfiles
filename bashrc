@@ -16,7 +16,7 @@ fi
 
 
 # Put your fun stuff here.
-alias ls="ls -A -F --group-directories-first"
+alias ls="ls -A -F --group-directories-first --color=always"
 alias mpa="mpv --no-audio-display"
 alias wget=wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"
 
