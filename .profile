@@ -5,7 +5,7 @@ export HISTCONTROL="ignoredups"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_DIRS="/etc/xdg:$XDG_CONFIG_DIRS"
 export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:/home/buster/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
+export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:/home/$USER/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
 export XDG_STATE_HOME="$HOME/.local/state"
 
 # Directories
@@ -31,5 +31,4 @@ export PYTHONUSERBASE=$XDG_DATA_HOME/python
 export TERMINFO="$XDG_DATA_HOME"/terminfo
 export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo 
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
-export WINEPREFIX="/mnt/media/wine_prefixes/.wine"
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
