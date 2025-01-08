@@ -16,6 +16,7 @@ fi
 
 
 # Put your fun stuff here.
+alias cat="bat"
 alias ls="ls -F --group-directories-first --color=always"
 alias mpa="mpv --no-audio-display"
 alias wget=wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"
