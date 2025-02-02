@@ -9,3 +9,4 @@ confirm-close-surface = false
 
 gtk-single-instance = true
 
+term = xterm
