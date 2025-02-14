@@ -1,4 +1,4 @@
-export EDITOR="micro"
+export EDITOR="nvim"
 export HISTCONTROL="ignoredups"
 
 # XDG
@@ -8,7 +8,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:/home/$USER/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-# Directories
+# Configs
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME"/bash-completion/bash_completion
 export DISCORD_USER_DATA_DIR="${XDG_DATA_HOME}"
@@ -28,6 +28,7 @@ export NUGET_PACKAGES="$XDG_CACHE_HOME"/NuGetPackages
 export PYTHON_HISTORY=$XDG_STATE_HOME/python/history
 export PYTHONPYCACHEPREFIX=$XDG_CACHE_HOME/python
 export PYTHONUSERBASE=$XDG_DATA_HOME/python
+export SPACEMACSDIR="$HOME/.config/emacs"
 export TERMINFO="$XDG_DATA_HOME"/terminfo
 export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo 
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
