@@ -25,7 +25,8 @@ PS1="\[\033[1;32m\]\W \[\033[1;34m\]\$ \[\033[0m\]"
 
 export EDITOR="nvim"
 export HISTCONTROL="ignoredups"
-export PATH="$PATH:~/.cargo/bin:/opt/idea-community/bin:~/.config/emacs/bin"
+export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
+export PATH="$PATH:~/.cargo/bin:/opt/idea-community/bin"
 
 # Directories
 export _JAVA_OPTIONS="-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java -Dawt.toolkit.name=WLToolkit"
