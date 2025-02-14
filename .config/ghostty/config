@@ -1,6 +1,6 @@
 font-family = "Jetbrains Mono"
 
-theme = ayu-darker
+theme = Ayu-Dark
 
 resize-overlay = never
 window-decoration = false
