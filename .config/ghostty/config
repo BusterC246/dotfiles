@@ -1,0 +1,10 @@
+font-family = "Jetbrains Mono"
+
+theme = ayu-darker
+
+resize-overlay = never
+window-decoration = false
+
+confirm-close-surface = false
+
+gtk-single-instance = true
