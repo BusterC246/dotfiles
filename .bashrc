@@ -23,7 +23,7 @@ alias wget=wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"
 
 PS1="\[\033[1;32m\]\W \[\033[1;34m\]\$ \[\033[0m\]"
 
-export EDITOR="micro"
+export EDITOR="nvim"
 export HISTCONTROL="ignoredups"
 export PATH="$PATH:~/.cargo/bin:/opt/idea-community/bin:~/.config/emacs/bin"
 
