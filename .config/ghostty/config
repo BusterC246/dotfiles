@@ -8,3 +8,5 @@ window-decoration = false
 confirm-close-surface = false
 
 gtk-single-instance = true
+
+term = xterm-256color
