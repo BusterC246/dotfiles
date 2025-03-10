@@ -60,4 +60,5 @@ alias ls="ls -F --group-directories-first --color=always"
 alias mpa="mpv --no-audio-display"
 alias mvn="mvn -gs '$XDG_CONFIG_HOME'/maven/settings.xml"
 alias wget="wget --hsts-file='$XDG_CACHE_HOME'/wget-hsts"
+alias xrdb="xrdb -load '$XDG_CONFIG_HOME'/X11/xresources"
 
