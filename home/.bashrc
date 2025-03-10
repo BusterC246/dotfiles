@@ -14,12 +14,6 @@ if [[ $- != *i* ]] ; then
 	return
 fi
 
-alias cat="bat"
-alias ls="ls -F --group-directories-first --color=always"
-alias mpa="mpv --no-audio-display"
-alias mvn="mvn -gs '$XDG_CONFIG_HOME'/maven/settings.xml"
-alias wget="wget --hsts-file='$XDG_CACHE_HOME'/wget-hsts"
-
 PS1="\[\033[1;32m\]\W \[\033[1;34m\]\$ \[\033[0m\]"
 
 # XDG Directories
@@ -59,3 +53,11 @@ export TERMINFO="$XDG_DATA_HOME"/terminfo
 export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo 
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
 export WGETRC="$XDG_CONFIG_HOME"/wgetrc
+
+# Aliases
+alias cat="bat"
+alias ls="ls -F --group-directories-first --color=always"
+alias mpa="mpv --no-audio-display"
+alias mvn="mvn -gs '$XDG_CONFIG_HOME'/maven/settings.xml"
+alias wget="wget --hsts-file='$XDG_CACHE_HOME'/wget-hsts"
+
