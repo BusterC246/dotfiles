@@ -17,22 +17,21 @@ fi
 alias cat="bat"
 alias ls="ls -F --group-directories-first --color=always"
 alias mpa="mpv --no-audio-display"
-alias mvn="mvn -gs $XDG_CONFIG_HOME/maven/settings.xml"
-alias wget=wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"
+alias mvn="mvn -gs '$XDG_CONFIG_HOME'/maven/settings.xml"
+alias wget="wget --hsts-file='$XDG_CACHE_HOME'/wget-hsts"
 
 PS1="\[\033[1;32m\]\W \[\033[1;34m\]\$ \[\033[0m\]"
+
+# XDG Directories
+export XDG_CACHE_HOME="$HOME"/.cache
+export XDG_CONFIG_HOME="$HOME"/.config
+export XDG_DATA_HOME="$HOME"/.local/share
+export XDG_STATE_HOME="$HOME"/.local/state
 
 export EDITOR=nvim
 export HISTCONTROL=ignoredups
 export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
 export PATH="$PATH":"$XDG_DATA_HOME"/cargo/bin:/opt/idea-community/bin
-
-# XDG Directories
-export XDG_CACHE_HOME="${HOME}/.cache"
-export XDG_CONFIG_HOME="${HOME}/.config"
-export XDG_DATA_HOME="${HOME}/.local/share"
-export XDG_STATE_HOME="${HOME}/.local/state"
-
 
 # Directories
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
