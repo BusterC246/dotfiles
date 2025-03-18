@@ -53,6 +53,7 @@ export TERMINFO="$XDG_DATA_HOME"/terminfo
 export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo 
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
 export WGETRC="$XDG_CONFIG_HOME"/wgetrc
+export WINEPREFIX="$XDG_DATA_HOME"/wineprefixes/default
 
 # Aliases
 alias cat="bat"
