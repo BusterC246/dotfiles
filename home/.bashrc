@@ -49,6 +49,7 @@ export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
 export PYTHON_HISTORY="$XDG_STATE_HOME"/python/history
 export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME"/python
 export PYTHONUSERBASE="$XDG_DATA_HOME"/python
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 export TERMINFO="$XDG_DATA_HOME"/terminfo
 export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo 
 export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
