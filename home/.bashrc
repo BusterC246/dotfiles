@@ -57,7 +57,7 @@ export WGETRC="$XDG_CONFIG_HOME"/wgetrc
 export WINEPREFIX="$XDG_DATA_HOME"/wineprefixes/default
 
 # Aliases
-alias cat="bat"
+alias cat="bat -p"
 alias ls="ls -F --group-directories-first --color=always"
 alias mpa="mpv --no-audio-display"
 alias mvn="mvn -gs '$XDG_CONFIG_HOME'/maven/settings.xml"
