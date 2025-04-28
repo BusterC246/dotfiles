@@ -30,7 +30,6 @@ export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node_repl_history
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
 export PYTHON_HISTORY="$XDG_STATE_HOME"/python/history
 export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME"/python
-export PYTHONSTARTUP="$XDG_CONFIG_HOME"/python/pythonrc
 export PYTHONUSERBASE="$XDG_DATA_HOME"/python
 export REDISCLI_HISTFILE="$XDG_STATE_HOME"/redis/rediscli_history
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
