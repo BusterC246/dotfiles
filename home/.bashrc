@@ -19,7 +19,6 @@ PS1="\[\033[1;32m\]\W \[\033[1;34m\]\$ \[\033[0m\]"
 source ~/.profile
 
 # Aliases
-alias cat="bat -p"
 alias ls="ls -F --group-directories-first --color=always"
 alias mpa="mpv --no-audio-display"
 alias mvn="mvn -gs '$XDG_CONFIG_HOME'/maven/settings.xml"
