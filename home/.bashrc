@@ -22,6 +22,7 @@ source ~/.profile
 alias ls="ls -F --group-directories-first --color=always"
 alias mpa="mpv --no-audio-display"
 alias mvn="mvn -gs '$XDG_CONFIG_HOME'/maven/settings.xml"
+alias yarn="yarn --use-yarnrc '$XDG_CONFIG_HOME'/yarn/config"
 alias wget="wget --hsts-file='$XDG_CACHE_HOME'/wget-hsts"
 alias xrdb="xrdb -load '$XDG_CONFIG_HOME'/X11/xresources"
 
