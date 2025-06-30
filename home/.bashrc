@@ -14,7 +14,7 @@ if [[ $- != *i* ]] ; then
 	return
 fi
 
-PS1="\[\e[92;1m\]\u@\h\[\e[0m\] \[\e[96;1m\]\W\[\e[0m\] \[\e[96;1m\]\$\[\e[0m\] "
+PS1="\[\e[92;1m\]\u@\h \[\e[94m\]\w \$\[\e[0m\] "
 
 source ~/.profile
 
