@@ -1,3 +1,5 @@
+#!/bin/sh
+
 export HISTCONTROL=ignoredups
 export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
 export PATH="$PATH":"$XDG_DATA_HOME"/cargo/bin:/opt/idea-community/bin:"$HOME"/.config/emacs/bin
@@ -21,7 +23,7 @@ export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export GOPATH="$XDG_DATA_HOME"/go
 export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
 export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
-export HISTFILE="$XDG_STATE_HOME"/bash/history
+export HISTFILE="${XDG_STATE_HOME}"/bash/history
 export MIX_XDG=true
 export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node_repl_history
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
