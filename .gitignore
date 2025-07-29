@@ -1,2 +1,2 @@
-hyprland/.config/land/
+hyprland/.config/land/*
 !hyprland/.config/land/general.conf
