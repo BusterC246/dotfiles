@@ -18,6 +18,8 @@ PS1="\[\e[92;1m\]\u@\h \[\e[94m\]\w \$\[\e[0m\] "
 
 source ~/.profile
 
+set -o vi
+
 # Aliases
 alias ls="ls -F --group-directories-first --color=always"
 alias mpa="mpv --no-audio-display"

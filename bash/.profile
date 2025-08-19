@@ -14,6 +14,7 @@ export XDG_STATE_HOME="${HOME}"/.local/state
 
 export BASH_COMPLETION_USER_FILE="${XDG_CONFIG_HOME}"/bash-completion/bash_completion
 export CARGO_HOME="${XDG_DATA_HOME}"/cargo
+export CLICOLOR=1
 export DISCORD_USER_DATA_DIR="${XDG_DATA_HOME}"
 export DOTNET_CLI_HOME="${XDG_DATA_HOME}"/dotnet
 export FFMPEG_DATADIR="${XDG_CONFIG_HOME}"/ffmpeg
