@@ -1,7 +1,7 @@
 source ~/.profile
 
 autoload -U colors && colors
-PS1='%F{green}%B%n@%m%f%B%F{blue} %~ %# %f'
+PS1="%F{green}%B%n@%m%f%B%F{blue} %~ %# %f"
 
 HISTFILE=~/.config/zsh/.histfile
 HISTSIZE=1000
