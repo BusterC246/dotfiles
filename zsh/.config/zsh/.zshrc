@@ -19,6 +19,7 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zmodload zsh/complist
 compinit
+promptinit; prompt gentoo
 _comp_options+=(globdots)
 
 # Aliases
