@@ -7,5 +7,5 @@ fi
 
 for DIR in *;
 do
-	[ -d $DIR ] && stow $DIR;
+	[ -d $DIR ] && stow -R $DIR;
 done
