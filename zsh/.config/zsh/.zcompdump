@@ -1,4 +1,4 @@
-#files: 1183	version: 5.9
+#files: 1188	version: 5.9
 
 _comps=(
 '-' '_precommand'
@@ -834,6 +834,7 @@ _comps=(
 'jmeter-plugins' '_jmeter-plugins'
 'jobs' '_jobs_builtin'
 'joe' '_joe'
+'john' '_john'
 'join' '_join'
 'jonas' '_jonas'
 'jot' '_jot'
@@ -959,6 +960,7 @@ _comps=(
 '-math-' '_math'
 'matlab' '_matlab'
 'mattrib' '_mtools'
+'maturin' '_maturin'
 'mc' '_mc'
 'mcd' '_mtools'
 'mcopy' '_mtools'
@@ -1140,6 +1142,7 @@ _comps=(
 'osascript' '_osascript'
 'osc' '_osc'
 'otool' '_otool'
+'p11-kit' '_p11-kit'
 'p4' '_perforce'
 'p4d' '_perforce'
 'pacat' '_pulseaudio'
@@ -1313,6 +1316,7 @@ _comps=(
 'pwait' '_pids'
 'pwdx' '_pids'
 'pwgen' '_pwgen'
+'pwn' '_pwn'
 'pygmentize' '_pygmentize'
 'pyhtmlizer' '_twisted'
 'qatom' '_portage_utils'
@@ -1679,6 +1683,7 @@ _comps=(
 'true' '_nothing'
 'truncate' '_truncate'
 'truss' '_truss'
+'trust' '_trust'
 'tryaffix' '_ispell'
 'tsc' '_tsc'
 'ts-node' '_ts-node'
@@ -2134,27 +2139,28 @@ autoload -Uz _afew _android _archlinux-java _artisan _atach \
             _golang _google _gpgconf _grpcurl _gtk-launch \
             _hello _hledger _homestead _httpie _hyprctl \
             _hyprpm _ibus _include-what-you-use _insmod _inxi \
-            _jmeter _jmeter-plugins _jonas _jrnl _kak \
-            _kitchen _knife _language_codes _layman _libinput \
-            _lilypond _loginctl _lsmod _lunchy _mako \
-            _makoctl _mc _meson _middleman _mina \
-            _mix _mkcert _modprobed-db _mpv _mssh \
-            _mussh _mvn _nano _nanoc _neofetch \
-            _networkQuality _nftables _ninja _node _nvm \
-            _openrc _openssl _openvpn3 _optirun _patchelf \
-            _patool _periscope _perl-cleaner _pgsql_utils _phing \
-            _pixz _pkcon _play _playerctl _pm2 \
-            _port _portage _portage_utils _protoc _pulseaudio \
-            _pygmentize _qmk _quoter _rails _ralio \
-            _rc-service _rc-status _rc-update _redis-cli _rfkill \
-            _rg _rkt _rmlint _rmmod _rslsync \
-            _rspec _rsvm _rubocop _sbt _scala \
-            _screencapture _scrub _sdd _sdkmanager _sensors \
-            _sensors-detect _setcap _setup.py _sfdx _shellcheck \
-            _showoff _srm _stack _subliminal _supervisorctl \
-            _svm _systemd-tmpfiles _teamocil _thor _tlp \
-            _tlp-radio-device _tlp-rdw _tlp-run-on _tlp-stat _tmuxinator \
-            _tmuxp _tox _tsc _ts-node _typst \
+            _jmeter _jmeter-plugins _john _jonas _jrnl \
+            _kak _kitchen _knife _language_codes _layman \
+            _libinput _lilypond _loginctl _lsmod _lunchy \
+            _mako _makoctl _maturin _mc _meson \
+            _middleman _mina _mix _mkcert _modprobed-db \
+            _mpv _mssh _mussh _mvn _nano \
+            _nanoc _neofetch _networkQuality _nftables _ninja \
+            _node _nvm _openrc _openssl _openvpn3 \
+            _optirun _p11-kit _patchelf _patool _periscope \
+            _perl-cleaner _pgsql_utils _phing _pixz _pkcon \
+            _play _playerctl _pm2 _port _portage \
+            _portage_utils _protoc _pulseaudio _pwn _pygmentize \
+            _qmk _quoter _rails _ralio _rc-service \
+            _rc-status _rc-update _redis-cli _rfkill _rg \
+            _rkt _rmlint _rmmod _rslsync _rspec \
+            _rsvm _rubocop _sbt _scala _screencapture \
+            _scrub _sdd _sdkmanager _sensors _sensors-detect \
+            _setcap _setup.py _sfdx _shellcheck _showoff \
+            _srm _stack _subliminal _supervisorctl _svm \
+            _systemd-tmpfiles _teamocil _thor _tlp _tlp-radio-device \
+            _tlp-rdw _tlp-run-on _tlp-stat _tmuxinator _tmuxp \
+            _tox _trust _tsc _ts-node _typst \
             _udevadm _udisks2 _udisksctl _ufw _virtualbox \
             _vnstat _wemux _wgetpaste _wg-quick _wl-copy \
             _wl-paste _wpctl _xsel _yarn _zcash-cli \
