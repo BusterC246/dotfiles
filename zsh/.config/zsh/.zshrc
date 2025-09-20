@@ -21,6 +21,8 @@ zmodload zsh/complist
 compinit
 _comp_options+=(globdots)
 
+eval $(opam env)
+
 # Aliases
 alias ls="ls -F --group-directories-first --color=always"
 alias mpa="mpv --no-audio-display"
