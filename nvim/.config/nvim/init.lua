@@ -107,7 +107,7 @@ require("lazy").setup({
 				-- C-k: Toggle signature help (if signature.enabled = true)
 				--
 				-- See :h blink-cmp-config-keymap for defining your own keymap
-				keymap = { preset = "super-tab" },
+				keymap = { preset = "enter" },
 
 				appearance = {
 					-- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
@@ -138,6 +138,13 @@ require("lazy").setup({
 			version = "v2.*",
 			build = "make install_jsregexp",
 			dependencies = { "rafamadriz/friendly-snippets" },
+		},
+		{
+			"windwp/nvim-autopairs",
+			event = "InsertEnter",
+			config = true,
+			-- use opts = {} for passing setup options
+			-- this is equivalent to setup({}) function
 		},
 		{
 			"ellisonleao/gruvbox.nvim",
