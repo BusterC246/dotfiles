@@ -50,7 +50,13 @@ require("lazy").setup({
 		{
 			"stevearc/conform.nvim",
 			opts = {
-				formatters_by_ft = { lua = { "stylua" }, typst = { "typstyle" }, ocaml = { "ocamlformat" } },
+				formatters_by_ft = {
+					lua = { "stylua" },
+					typst = { "typstyle" },
+					ocaml = { "ocamlformat" },
+					bash = { "shfmt" },
+					sh = { "shfmt" },
+				},
 				format_on_save = {
 					timeout_ms = 500,
 					lsp_format = "fallback",
@@ -166,6 +172,7 @@ require("lazy").setup({
 vim.o.background = "dark"
 vim.cmd([[colorscheme gruvbox]])
 
+vim.lsp.enable("bashls")
 vim.lsp.enable("clangd")
 vim.lsp.enable("hyprls")
 vim.lsp.enable("lua_ls")
@@ -174,16 +181,22 @@ vim.lsp.enable("pyright")
 vim.lsp.enable("rust_analyzer")
 vim.lsp.enable("tinymist")
 
+vim.lsp.config["tinymist"] = {
+	cmd = { "tinymist" },
+	filetypes = { "typst" },
+	settings = {
+		formatterMode = "typstyle",
+	},
+}
+
+vim.diagnostic.config({
+	virtual_text = false,
+})
+vim.o.updatetime = 250
+vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])
+
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
 vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
 vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
-
-vim.diagnostic.config({
-	virtual_text = false,
-})
-
--- Show line diagnostics automatically in hover window
-vim.o.updatetime = 250
-vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])
