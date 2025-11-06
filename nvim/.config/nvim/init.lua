@@ -56,6 +56,7 @@ require("lazy").setup({
 					ocaml = { "ocamlformat" },
 					bash = { "shfmt" },
 					sh = { "shfmt" },
+					rust = { "rustformat" },
 				},
 				format_on_save = {
 					timeout_ms = 500,
@@ -113,7 +114,7 @@ require("lazy").setup({
 				-- C-k: Toggle signature help (if signature.enabled = true)
 				--
 				-- See :h blink-cmp-config-keymap for defining your own keymap
-				keymap = { preset = "enter" },
+				keymap = { preset = "super-tab" },
 
 				appearance = {
 					-- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
