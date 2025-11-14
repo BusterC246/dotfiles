@@ -1,11 +1,7 @@
-export CAML_LD_LIBRARY_PATH="${HOME}"/.local/share/opam/default/lib/stublibs:"${HOME}"/.local/share/opam/default/lib/ocaml/stublibs:"${HOME}"/.local/share/opam/default/lib/ocaml
 export HISTCONTROL=ignoredups
 export LIBVA_DRIVER_NAME=radeonsi
 export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
-export OCAML_TOPLEVEL_PATH="${HOME}"/.local/share/opam/default/lib/toplevel
-export OCAMLTOP_INCLUDE_PATH="${HOME}"/.local/share/opam/default/lib/toplevel
-export OPAM_SWITCH_PREFIX="${HOME}"/.local/share/opam/default
-export PATH="${PATH}":/opt/idea-community/bin:"${HOME}"/.local/share/nvim/mason/bin:"${HOME}"/.local/share/opam/default/bin:"${XDG_DATA_HOME}"/cargo/bin
+
 export RADV_PERFTEST=video_decode
 export RUSTICL_ENABLE=radeonsi
 export VDPAU_DRIVER=radeonsi
@@ -16,7 +12,10 @@ export XDG_CONFIG_HOME="${HOME}"/.config
 export XDG_DATA_HOME="${HOME}"/.local/share
 export XDG_STATE_HOME="${HOME}"/.local/state
 
+export PATH="${PATH}":/opt/idea-community/bin:"${XDG_DATA_HOME}"/nvim/mason/bin:"${HOME}"/.local/share/opam/default/bin:"${XDG_DATA_HOME}"/cargo/bin
+
 export BASH_COMPLETION_USER_FILE="${XDG_CONFIG_HOME}"/bash-completion/bash_completion
+export CAML_LD_LIBRARY_PATH="${XDG_DATA_HOME}"/opam/default/lib/stublibs:"${XDG_DATA_HOME}"/opam/default/lib/ocaml/stublibs:"${XDG_DATA_HOME}"/opam/default/lib/ocaml
 export CARGO_HOME="${XDG_DATA_HOME}"/cargo
 export CLICOLOR=1
 export DISCORD_USER_DATA_DIR="${XDG_DATA_HOME}"
@@ -37,7 +36,10 @@ export NPM_CONFIG_CACHE="${XDG_CACHE_HOME}"/npm
 export NPM_CONFIG_INIT_MODULE="${XDG_CONFIG_HOME}"/npm/config/npm-init.js
 export NPM_CONFIG_TMP="${XDG_RUNTIME_DIR}"/npm
 export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}"/npm/npmrc
+export OCAMLTOP_INCLUDE_PATH="${XDG_DATA_HOME}"/opam/default/lib/toplevel
+export OCAML_TOPLEVEL_PATH="${XDG_DATA_HOME}"/opam/default/lib/toplevel
 export OPAMROOT="${XDG_DATA_HOME}"/opam
+export OPAM_SWITCH_PREFIX="${XDG_DATA_HOME}"/default
 export PYTHONPYCACHEPREFIX="${XDG_CACHE_HOME}"/python
 export PYTHONUSERBASE="${XDG_DATA_HOME}"/python
 export PYTHON_HISTORY="${XDG_STATE_HOME}"/python/history
