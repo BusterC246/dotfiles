@@ -12,10 +12,9 @@ export XDG_CONFIG_HOME="${HOME}"/.config
 export XDG_DATA_HOME="${HOME}"/.local/share
 export XDG_STATE_HOME="${HOME}"/.local/state
 
-export PATH="${PATH}":/opt/idea-community/bin:"${XDG_DATA_HOME}"/nvim/mason/bin:"${HOME}"/.local/share/opam/default/bin:"${XDG_DATA_HOME}"/cargo/bin
+export PATH="${PATH}":/opt/idea-community/bin:"${XDG_DATA_HOME}"/nvim/mason/bin:"${XDG_DATA_HOME}"/cargo/bin
 
 export BASH_COMPLETION_USER_FILE="${XDG_CONFIG_HOME}"/bash-completion/bash_completion
-export CAML_LD_LIBRARY_PATH="${XDG_DATA_HOME}"/opam/default/lib/stublibs:"${XDG_DATA_HOME}"/opam/default/lib/ocaml/stublibs:"${XDG_DATA_HOME}"/opam/default/lib/ocaml
 export CARGO_HOME="${XDG_DATA_HOME}"/cargo
 export CLICOLOR=1
 export DISCORD_USER_DATA_DIR="${XDG_DATA_HOME}"
@@ -36,10 +35,6 @@ export NPM_CONFIG_CACHE="${XDG_CACHE_HOME}"/npm
 export NPM_CONFIG_INIT_MODULE="${XDG_CONFIG_HOME}"/npm/config/npm-init.js
 export NPM_CONFIG_TMP="${XDG_RUNTIME_DIR}"/npm
 export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}"/npm/npmrc
-export OCAMLTOP_INCLUDE_PATH="${XDG_DATA_HOME}"/opam/default/lib/toplevel
-export OCAML_TOPLEVEL_PATH="${XDG_DATA_HOME}"/opam/default/lib/toplevel
-export OPAMROOT="${XDG_DATA_HOME}"/opam
-export OPAM_SWITCH_PREFIX="${XDG_DATA_HOME}"/default
 export PYTHONPYCACHEPREFIX="${XDG_CACHE_HOME}"/python
 export PYTHONUSERBASE="${XDG_DATA_HOME}"/python
 export PYTHON_HISTORY="${XDG_STATE_HOME}"/python/history
