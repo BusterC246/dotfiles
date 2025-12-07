@@ -21,6 +21,8 @@ zmodload zsh/complist
 compinit
 _comp_options+=(globdots)
 
+eval $(ssh-agent -s)
+
 # Aliases
 alias ls="ls -F --group-directories-first --color=always"
 alias mpa="mpv --no-audio-display"
@@ -30,3 +32,4 @@ alias wget="wget --hsts-file='$XDG_CACHE_HOME'/wget-hsts"
 alias xrdb="xrdb -load '$XDG_CONFIG_HOME'/X11/xresources"
 
 source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
+[[ ! -r "${HOME}"/.opam/opam-init/init.zsh ]] || source "${HOME}"/.opam/opam-init/init.zsh > /dev/null 2> /dev/null

@@ -1,3 +1,5 @@
-nvim/.config/nvim/lazy-lock.json
-zsh/.config/zsh/.histfile
-zsh/.config/zsh/.zcompdump
+lazy-lock.json
+*histfile*
+.zcompdump
+*.lock
+*.LOCK

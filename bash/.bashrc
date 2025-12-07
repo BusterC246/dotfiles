@@ -19,6 +19,8 @@ source ~/.profile
 
 set -o vi
 
+eval $(ssh-agent -s)
+
 # Aliases
 alias ls="ls -F --group-directories-first --color=always"
 alias mpa="mpv --no-audio-display"
