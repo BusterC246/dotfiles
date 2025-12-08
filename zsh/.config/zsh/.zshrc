@@ -21,7 +21,7 @@ zmodload zsh/complist
 compinit
 _comp_options+=(globdots)
 
-eval $(ssh-agent -s)
+eval $(keychain --eval --quiet id_ed25519)
 
 # Aliases
 alias ls="ls -F --group-directories-first --color=always"
