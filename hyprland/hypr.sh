@@ -1,1 +1,1 @@
-dbus-run-session Hyprland
+dbus-launch --exit-with-session Hyprland
