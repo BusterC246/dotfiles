@@ -96,6 +96,9 @@ require("lazy").setup({
 			event = "User FilePost",
 		},
 		{
+			"dccsillag/magma-nvim",
+		},
+		{
 			"saghen/blink.cmp",
 			dependencies = {
 				"rafamadriz/friendly-snippets",
