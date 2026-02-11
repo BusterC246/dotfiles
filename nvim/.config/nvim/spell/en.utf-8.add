@@ -84,3 +84,5 @@ PDIR
 PDDR
 GPIO
 ethernet
+CSMA
+NIC
