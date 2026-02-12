@@ -10,6 +10,7 @@ export VDPAU_DRIVER=radeonsi
 export XDG_CACHE_HOME="${HOME}"/.cache
 export XDG_CONFIG_HOME="${HOME}"/.config
 export XDG_DATA_HOME="${HOME}"/.local/share
+export XDG_PICTURES_DIR="${HOME}"/Pictures
 export XDG_STATE_HOME="${HOME}"/.local/state
 
 export PATH="${PATH}":/opt/idea-community/bin:"${XDG_DATA_HOME}"/nvim/mason/bin:"${XDG_DATA_HOME}"/cargo/bin
