@@ -11,6 +11,7 @@ thumbs.db
 .node_repl_history
 .wget-hsts
 .lesshst
+.histfile
 
 *.swp
 *.swo
