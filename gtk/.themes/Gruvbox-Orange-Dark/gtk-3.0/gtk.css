@@ -1045,7 +1045,6 @@ dropdown button.toggle, combobox button.toggle {
 
 dropdown > button > box, combobox > button > box {
   border-radius: 0 9px 9px 0;
-  border-spacing: 6px;
 }
 
 dropdown > button > box > stack > row.activatable:hover, combobox > button > box > stack > row.activatable:hover, dropdown > button > box > stack > row.activatable:active, combobox > button > box > stack > row.activatable:active {
