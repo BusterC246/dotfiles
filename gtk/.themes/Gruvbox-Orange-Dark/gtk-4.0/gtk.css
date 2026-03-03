@@ -113,7 +113,6 @@ gridview > child:selected {
 }
 
 gridview > child box {
-  border-spacing: 8px;
   margin: 12px;
 }
 
@@ -283,7 +282,6 @@ headerbar popover.background entry entry,
 entry {
   min-height: 34px;
   padding: 0 8px;
-  border-spacing: 6px;
   border-radius: 12px;
   caret-color: currentColor;
   transition: all 75ms cubic-bezier(0, 0, 0.2, 1), box-shadow 300ms cubic-bezier(0, 0, 0.2, 1);
@@ -1093,7 +1091,6 @@ button.text-button.image-button, button.image-text-button {
 button.text-button.image-button > box,
 button.text-button.image-button > box > box, button.image-text-button > box,
 button.image-text-button > box > box {
-  border-spacing: 4px;
 }
 
 button.text-button.image-button > box > label,
@@ -1129,7 +1126,6 @@ button.arrow-button {
 }
 
 button.arrow-button > box {
-  border-spacing: 4px;
 }
 
 button.arrow-button.text-button {
@@ -1138,7 +1134,6 @@ button.arrow-button.text-button {
 }
 
 button.arrow-button.text-button > box {
-  border-spacing: 6px;
 }
 
 menubutton.pill > button, button.pill {
@@ -1358,7 +1353,6 @@ stackswitcher > button.needs-attention:checked > image {
 }
 
 button.font > box, button.file > box {
-  border-spacing: 6px;
 }
 
 button.font > box > box > label, button.file > box > box > label {
@@ -1498,7 +1492,6 @@ splitbutton.text-button.image-button > button, splitbutton.image-text-button > b
 }
 
 splitbutton.text-button.image-button > button > box, splitbutton.image-text-button > button > box {
-  border-spacing: 6px;
 }
 
 splitbutton > button:dir(ltr),
@@ -1575,7 +1568,6 @@ splitbutton > menubutton > button > arrow.none {
 }
 
 buttoncontent {
-  border-spacing: 6px;
 }
 
 buttoncontent > label {
@@ -1716,7 +1708,6 @@ button.link > label {
 spinbutton {
   border-radius: 9px;
   padding: 0;
-  border-spacing: 0;
   transition: all 75ms cubic-bezier(0, 0, 0.2, 1), box-shadow 300ms cubic-bezier(0, 0, 0.2, 1);
   box-shadow: inset 0 0 0 2px transparent;
   background-color: rgba(251, 241, 199, 0.08);
@@ -1810,7 +1801,6 @@ dropdown button.toggle, combobox button.toggle {
 }
 
 dropdown > button > box, combobox > button > box {
-  border-spacing: 6px;
 }
 
 dropdown > button > box > stack > row.activatable:hover, combobox > button > box > stack > row.activatable:hover, dropdown > button > box > stack > row.activatable:active, combobox > button > box > stack > row.activatable:active {
@@ -1865,7 +1855,6 @@ dropdown popover.menu .dropdown-searchbar + scrolledwindow:not(.undershoot-top) 
 .toolbar {
   padding: 6px;
   /* background-color: $background; */
-  border-spacing: 6px;
 }
 
 .osd .toolbar {
@@ -1939,7 +1928,6 @@ dropdown popover.menu .dropdown-searchbar + scrolledwindow:not(.undershoot-top) 
 
 searchbar > revealer > box {
   padding: 6px;
-  border-spacing: 0;
   border-style: solid;
   border-width: 0 0 1px;
   border-color: rgba(251, 241, 199, 0.12);
@@ -2111,7 +2099,6 @@ headerbar > windowhandle > box {
 headerbar > windowhandle > box,
 headerbar > windowhandle > box > box.start,
 headerbar > windowhandle > box > box.end {
-  border-spacing: 6px;
 }
 
 headerbar entry,
@@ -3184,7 +3171,6 @@ tabthumbnail.pinned .card {
 }
 
 tabthumbnail .icon-title-box {
-  border-spacing: 6px;
 }
 
 tabthumbnail .tab-unpin-icon {
@@ -3390,7 +3376,6 @@ switch:focus slider, switch:hover slider, switch:focus:hover slider {
 checkbutton,
 radiobutton {
   outline: none;
-  border-spacing: 3px;
 }
 
 check,
@@ -3934,7 +3919,6 @@ actionbar {
 
 actionbar > revealer > box {
   padding: 6px;
-  border-spacing: 6px;
   box-shadow: none;
   /* background-color: $base; */
   background-color: rgba(251, 241, 199, 0.04);
@@ -4240,7 +4224,6 @@ row:selected:disabled {
 }
 
 .rich-list > row > box {
-  border-spacing: 12px;
 }
 
 row label.subtitle {
@@ -4250,7 +4233,6 @@ row label.subtitle {
 row > box.header {
   margin-left: 12px;
   margin-right: 12px;
-  border-spacing: 6px;
   min-height: 50px;
 }
 
@@ -4261,7 +4243,6 @@ row > box.header > .icon:disabled {
 row > box.header > box.title {
   margin-top: 6px;
   margin-bottom: 6px;
-  border-spacing: 3px;
   padding: 0;
 }
 
@@ -4274,7 +4255,6 @@ row > box.header > box.title > .subtitle {
 
 row > box.header > .prefixes,
 row > box.header > .suffixes {
-  border-spacing: 6px;
 }
 
 row > box.header > .icon:dir(ltr),
@@ -4334,7 +4314,6 @@ row.spin:not(:selected).activatable.focused:hover, row.spin:not(:selected).activ
 
 row.spin spinbutton {
   background: none;
-  border-spacing: 6px;
   box-shadow: none;
 }
 
@@ -4617,7 +4596,6 @@ columnview.data-table > listview > row > cell {
 }
 
 treeexpander {
-  border-spacing: 6px;
 }
 
 columnview row:not(:selected) cell editablelabel:not(.editing):focus-within {
@@ -4638,7 +4616,6 @@ columnview row:not(:selected) cell editablelabel.editing text selection {
  *********************/
 .app-notification {
   margin: 6px;
-  border-spacing: 0;
   padding: 0;
   border: none;
   background-image: none;
@@ -4793,7 +4770,6 @@ window.dialog.message .titlebar:backdrop {
 
 window.dialog.message .dialog-action-area {
   padding: 18px;
-  border-spacing: 18px;
 }
 
 window.dialog.message .dialog-action-area > button {
@@ -4834,11 +4810,9 @@ window.messagedialog {
 
 window.messagedialog .message-area {
   padding: 24px 30px;
-  border-spacing: 10px;
 }
 
 window.messagedialog .response-area {
-  border-spacing: 6px;
 }
 
 window.messagedialog .response-area button.suggested {
@@ -5018,7 +4992,6 @@ filechooser stack.view frame > border {
 }
 
 filechooserbutton > button > box {
-  border-spacing: 6px;
 }
 
 filechooserbutton:drop(active) {
@@ -5093,7 +5066,6 @@ placesview .server-list-button:checked > image {
 }
 
 placesview > actionbar > revealer > box > label {
-  border-spacing: 6px;
 }
 
 /*********
@@ -5176,7 +5148,6 @@ video image.osd {
  **************/
 infobar > revealer > box {
   padding: 6px;
-  border-spacing: 12px;
   border-bottom: 1px solid rgba(251, 241, 199, 0.12);
   box-shadow: none;
 }
@@ -5265,7 +5236,6 @@ tooltip.background {
 }
 
 tooltip > box {
-  border-spacing: 6px;
 }
 
 /*****************
@@ -5492,7 +5462,6 @@ windowcontrols > button.minimize:backdrop:hover:not(.suggested-action):not(.dest
 
 /* $window-space: if($window_button == 'mac', $space-size * 1.5, $space-size); */
 windowcontrols {
-  border-spacing: 6px;
 }
 
 windowcontrols:not(.empty).start:dir(ltr), windowcontrols:not(.empty).end:dir(rtl) {
@@ -5547,11 +5516,9 @@ shortcuts-section {
 
 .shortcuts-search-results {
   margin: 20px;
-  border-spacing: 24px;
 }
 
 shortcut {
-  border-spacing: 6px;
 }
 
 shortcut > .keycap {
@@ -5652,7 +5619,6 @@ popover.emoji-picker > contents {
 
 .emoji-searchbar {
   padding: 6px;
-  border-spacing: 6px;
   border-bottom: 1px solid rgba(251, 241, 199, 0.12);
   background: none;
 }
@@ -5664,7 +5630,6 @@ popover.emoji-picker > contents {
 
 .emoji-toolbar {
   padding: 0;
-  border-spacing: 3px;
   border-top: 1px solid rgba(251, 241, 199, 0.12);
   background: none;
 }
@@ -5696,7 +5661,6 @@ emoji-completion-row {
 }
 
 emoji-completion-row > box {
-  border-spacing: 6px;
   padding: 2px 6px;
 }
 
@@ -5859,7 +5823,6 @@ popover.entry-completion > contents {
 
 #NautilusViewCell clamp box {
   margin: 0;
-  border-spacing: 0;
 }
 
 #NautilusFileChooser gridview.view {
@@ -6329,7 +6292,6 @@ searchbutton > popover > arrow {
 }
 
 menubutton stack > box {
-  border-spacing: 6px;
 }
 
 #TweakPreferencesPage.tweak-group label.subtitle {
@@ -6394,7 +6356,6 @@ gs-summary-tile image.loading-icon {
 
 .review-row > box {
   margin: 12px;
-  border-spacing: 3px;
 }
 
 .review-row textview {
@@ -6599,7 +6560,6 @@ flowboxchild.card:not(.category-tile) {
 }
 
 .infobox {
-  border-spacing: 6px;
   padding: 12px;
 }
 
@@ -6756,7 +6716,6 @@ star-image > image.non-starred:hover {
 
 scrolledwindow.list-page > viewport > clamp > box {
   margin: 24px 12px;
-  border-spacing: 24px;
 }
 
 .update-preferences preferencesgroup > box > box {
@@ -6971,7 +6930,6 @@ row.app > box.header {
 }
 
 row.app > box.header {
-  border-spacing: 12px;
 }
 
 row.app > box.header > image {
@@ -7708,7 +7666,6 @@ toast {
   margin: 12px;
   margin-bottom: 24px;
   border-radius: 9999px;
-  border-spacing: 6px;
   padding: 6px;
   box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.1), 0 4px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 10px 0 rgba(0, 0, 0, 0.1), inset 0 1px rgba(251, 241, 199, 0.1);
   background-color: #242220;
@@ -7765,7 +7722,6 @@ viewswitcher button.toggle > stack > box.narrow {
   font-size: 0.75rem;
   padding-top: 6px;
   padding-bottom: 4px;
-  border-spacing: 4px;
 }
 
 viewswitcher button.toggle > stack > box.narrow > stack > label {
@@ -7775,7 +7731,6 @@ viewswitcher button.toggle > stack > box.narrow > stack > label {
 
 viewswitcher button.toggle > stack > box.wide {
   padding: 2px 12px;
-  border-spacing: 6px;
 }
 
 viewswitcherbar actionbar > revealer > box {
@@ -7790,7 +7745,6 @@ viewswitcherbar actionbar > revealer > box viewswitcher.narrow button.toggle {
 viewswitcherbar actionbar > revealer > box viewswitcher.narrow button.toggle > stack > box.narrow {
   padding-top: 5px;
   padding-bottom: 1px;
-  border-spacing: 0;
 }
 
 viewswitchertitle {
@@ -7811,7 +7765,6 @@ viewswitchertitle viewswitcher.narrow {
 viewswitchertitle viewswitcher.narrow button.toggle > stack > box.narrow {
   padding-top: 0;
   padding-bottom: 0;
-  border-spacing: 0;
 }
 
 viewswitchertitle viewswitcher.wide {
@@ -7858,7 +7811,6 @@ indicatorbin.needs-attention > indicator > label {
 
 preferencespage > scrolledwindow > viewport > clamp > box {
   margin: 24px 12px;
-  border-spacing: 24px;
 }
 
 preferencesgroup > box background-preview widget.sidebar,
@@ -7868,7 +7820,6 @@ preferencesgroup > box widget.header-bar:not(.editable-area) {
 
 preferencesgroup > box,
 preferencesgroup > box .labels {
-  border-spacing: 6px;
 }
 
 preferencesgroup > box > box.header:not(.single-line) {
@@ -8001,12 +7952,10 @@ preferencesgroup > box box > list.boxed-list-separate row:hover, preferencesgrou
 
 window.about .main-page > viewport > clamp > box {
   margin: 12px;
-  border-spacing: 6px;
 }
 
 window.about .main-page > viewport > clamp > box > box {
   margin-top: 18px;
-  border-spacing: 18px;
   margin-bottom: 6px;
 }
 
@@ -8019,7 +7968,6 @@ window.about .main-page .app-version {
 
 window.about .subpage > viewport > clamp > box {
   margin: 18px 12px;
-  border-spacing: 18px;
 }
 
 window.about .subpage > clamp > textview {
@@ -8029,11 +7977,9 @@ window.about .subpage > clamp > textview {
 
 statuspage > scrolledwindow > viewport > box {
   margin: 36px 12px;
-  border-spacing: 36px;
 }
 
 statuspage > scrolledwindow > viewport > box > clamp > box {
-  border-spacing: 12px;
 }
 
 statuspage > scrolledwindow > viewport > box > clamp > box > .icon {
@@ -8051,7 +7997,6 @@ statuspage > scrolledwindow > viewport > box > clamp > box > .icon:not(:last-chi
 
 statuspage.compact > scrolledwindow > viewport > box {
   margin: 24px 12px;
-  border-spacing: 24px;
 }
 
 statuspage.compact > scrolledwindow > viewport > box > clamp > box > .icon {
