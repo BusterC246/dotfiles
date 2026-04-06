@@ -3,6 +3,8 @@ thumbs.db
 *.tmp
 *.log
 *.bak
+*.lock
+*.LOCK
 
 .zcompdump*
 .zsh_history
