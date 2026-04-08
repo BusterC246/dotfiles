@@ -5,6 +5,7 @@ thumbs.db
 *.bak
 *.lock
 *.LOCK
+lazy-lock.json
 
 .zcompdump*
 .zsh_history
