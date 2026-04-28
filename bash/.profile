@@ -13,7 +13,7 @@ export XDG_DATA_HOME="${HOME}"/.local/share
 export XDG_PICTURES_DIR="${HOME}"/Pictures
 export XDG_STATE_HOME="${HOME}"/.local/state
 
-export PATH="${PATH}":/opt/idea-community/bin:"${XDG_DATA_HOME}"/nvim/mason/bin:"${XDG_DATA_HOME}"/cargo/bin
+export PATH="${PATH}":/opt/idea-community/bin:"${XDG_DATA_HOME}"/nvim/mason/bin:"${XDG_DATA_HOME}"/cargo/bin:"${XDG_DATA_HOME}"/../bin
 
 export BASH_COMPLETION_USER_FILE="${XDG_CONFIG_HOME}"/bash-completion/bash_completion
 export CARGO_HOME="${XDG_DATA_HOME}"/cargo
