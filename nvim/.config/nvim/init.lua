@@ -28,13 +28,17 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
+vim.opt.splitkeep = "screen"
 
 vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 0
 
 vim.opt.wrap = true
+vim.opt.breakindent = true
 vim.opt.linebreak = true
+vim.opt.smoothscroll = true
+vim.opt.display:append("lastline")
 
 vim.opt.spell = true
 vim.opt.spelllang = { "en" }
@@ -43,6 +47,11 @@ vim.opt.spellsuggest = "best,5"
 vim.opt.signcolumn = "yes"
 vim.opt.cursorline = true
 vim.opt.clipboard = "unnamedplus"
+
+vim.opt.cmdheight = 0
+vim.opt.showmode = false
+vim.opt.wildmode = "longest:full,full"
+vim.opt.wildoptions:append("fuzzy")
 
 -- ---------------------------
 -- Plugins
@@ -338,9 +347,21 @@ end, { desc = "Format (Conform)" })
 
 -- LSP keymaps
 vim.api.nvim_create_autocmd("LspAttach", {
-	group = vim.api.nvim_create_augroup("LspKeymaps", { clear = true }),
+	group = vim.api.nvim_create_augroup("LspAttachConfig", { clear = true }),
 	callback = function(args)
 		local bufnr = args.buf
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+		if client and client:supports_method("textDocument/inlayHint", bufnr) then
+			vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+		end
+
+		-- buffer-local toggle for inlay hints
+		vim.keymap.set("n", "<leader>uh", function()
+			local enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
+			vim.lsp.inlay_hint.enable(not enabled, { bufnr = bufnr })
+		end, { buffer = bufnr, desc = "Toggle inlay hints" })
+
 		local map = function(mode, lhs, rhs, desc)
 			vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
 		end
