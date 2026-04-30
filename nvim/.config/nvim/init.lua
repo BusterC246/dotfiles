@@ -44,11 +44,11 @@ vim.opt.spellsuggest = "best,5"
 require("lazy").setup({
 	spec = {
 		-- add your plugins here
-		{
-			"nvim-telescope/telescope.nvim",
-		},
+		-- Formatter
 		{
 			"stevearc/conform.nvim",
+			event = { "BufReadPre", "BufNewFile" },
+			cmd = "ConformInfo",
 			opts = {
 				formatters_by_ft = {
 					lua = { "stylua" },
@@ -61,9 +61,27 @@ require("lazy").setup({
 				format_on_save = {
 					timeout_ms = 500,
 					lsp_format = "fallback",
+					lsp_fallback = true,
 				},
 			},
 		},
+
+		-- Git
+		{
+			"lewis6991/gitsigns.nvim",
+			event = { "BufReadPost", "BufNewFile" },
+		},
+
+		-- Treesitter
+		{
+			"nvim-treesitter/nvim-treesitter",
+			event = { "BufReadPost", "BufNewFile" },
+			cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo", "TSUpdate" },
+			build = ":TSUpdate",
+			lazy = false,
+		},
+
+		-- Statusline
 		{
 			"nvim-lualine/lualine.nvim",
 			event = "VeryLazy",
@@ -71,90 +89,98 @@ require("lazy").setup({
 				require("lualine").setup()
 			end,
 		},
+
+		-- Colorscheme
 		{
-			"nvim-treesitter/nvim-treesitter",
-			branch = "master",
+			"ellisonleao/gruvbox.nvim",
+			priority = 1000,
+			config = true,
+			opts = {
+				terminal_colors = true,
+				contrast = "hard",
+			},
+		},
+
+		-- Linters/Formatters
+		{
+			"nvimtools/none-ls.nvim",
+			event = { "BufReadPre", "BufNewFile" },
+			dependencies = { "nvimtools/none-ls-extras.nvim" },
+		},
+
+		-- LSP
+		{
+			"neovim/nvim-lspconfig",
+			event = { "BufReadPre", "BufNewFile" },
+		},
+		{
+			"mason-org/mason-lspconfig.nvim",
 			lazy = false,
-			build = ":TSUpdate",
 		},
 		{
 			"mason-org/mason.nvim",
-			cmd = { "Mason", "MasonInstall", "MasonUpdate" },
-			opts = {},
+			cmd = {
+				"Mason",
+				"MasonInstall",
+				"MasonInstallAll",
+				"MasonUninstall",
+				"MasonUninstallAll",
+				"MasonLog",
+			},
 		},
-		{
-			"neovim/nvim-lspconfig",
-			lazy = false,
-		},
-		{
-			"chomosuke/typst-preview.nvim",
-			lazy = false,
-			opts = {},
-		},
-		{
-			"lewis6991/gitsigns.nvim",
-			event = "User FilePost",
-		},
-		{
-			"dccsillag/magma-nvim",
-		},
+
+		-- Completions
 		{
 			"saghen/blink.cmp",
+			version = "1.*",
+			event = { "InsertEnter", "LspAttach" },
 			dependencies = {
 				"rafamadriz/friendly-snippets",
+				{
+					"L3MON4D3/LuaSnip",
+					version = "v2.*",
+					opts = { history = true, updateevents = "TextChanged,TextChangedI" },
+				},
+				{
+					"windwp/nvim-autopairs",
+					event = "InsertEnter",
+					opts = {
+						check_ts = true,
+						ts_config = { lua = { "string" }, javascript = { "template_string" }, java = false },
+						enable_check_bracket_line = false,
+						ignored_next_char = "[%w%.]",
+						fast_wrap = {},
+						disable_filetype = { "MiniPick", "vim", "minifiles" },
+					},
+				},
 			},
-			version = "1.*",
-			opts = {
-				-- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
-				-- 'super-tab' for mappings similar to vscode (tab to accept)
-				-- 'enter' for enter to accept
-				-- 'none' for no mappings
-				--
-				-- All presets have the following mappings:
-				-- C-space: Open menu or open docs if already open
-				-- C-n/C-p or Up/Down: Select next/previous item
-				-- C-e: Hide menu
-				-- C-k: Toggle signature help (if signature.enabled = true)
-				--
-				-- See :h blink-cmp-config-keymap for defining your own keymap
-				keymap = { preset = "super-tab" },
 
+			opts = {
+				keymap = { preset = "super-tab" },
 				appearance = {
-					-- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-					-- Adjusts spacing to ensure icons are aligned
 					nerd_font_variant = "mono",
 				},
 
-				-- (Default) Only show the documentation popup when manually triggered
-				completion = { documentation = { auto_show = false } },
+				completion = {
+					documentation = {
+						auto_show = false,
+					},
+					list = {
+						selection = {
+							preselect = true,
+							auto_insert = true,
+						},
+					},
+				},
 
-				-- Default list of enabled providers defined so that you can extend it
-				-- elsewhere in your config, without redefining it, due to `opts_extend`
 				sources = {
 					default = { "lsp", "path", "snippets", "buffer" },
 				},
 
-				-- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
-				-- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
-				-- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
-				--
-				-- See the fuzzy documentation for more information
 				fuzzy = { implementation = "prefer_rust_with_warning" },
 			},
+
 			opts_extend = { "sources.default" },
-		},
-		{
-			"L3MON4D3/LuaSnip",
-			version = "v2.*",
-			build = "make install_jsregexp",
-			dependencies = { "rafamadriz/friendly-snippets" },
-		},
-		{
-			"windwp/nvim-autopairs",
-			event = "InsertEnter",
-			config = true,
-			-- use opts = {} for passing setup options
-			-- this is equivalent to setup({}) function
 		},
 		{
 			"kylechui/nvim-surround",
@@ -167,14 +193,15 @@ require("lazy").setup({
 			--     })
 			-- end
 		},
+
+		-- Files
 		{
-			"ellisonleao/gruvbox.nvim",
-			priority = 1000,
-			config = true,
-			opts = {
-				terminal_colors = true,
-				contrast = "hard",
-			},
+			"nvim-telescope/telescope.nvim",
+		},
+		{
+			"chomosuke/typst-preview.nvim",
+			lazy = false,
+			opts = {},
 		},
 	},
 	-- Configure any other settings here. See the documentation for more details.
