@@ -15,17 +15,17 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Make sure to setup `mapleader` and `maplocalleader` before
--- loading lazy.nvim so that mappings are correct.
--- This is also a good place to setup other settings (vim.opt)
+-- Leaders
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+-- ---------------------------
+-- Core options
+-- ---------------------------
+
 vim.opt.termguicolors = true
-
-vim.o.number = true
-vim.o.relativenumber = true
-
+vim.opt.number = true
+vim.opt.relativenumber = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
@@ -40,11 +40,52 @@ vim.opt.spell = true
 vim.opt.spelllang = { "en" }
 vim.opt.spellsuggest = "best,5"
 
--- Setup lazy.nvim
+vim.opt.signcolumn = "yes"
+vim.opt.cursorline = true
+vim.opt.clipboard = "unnamedplus"
+
+-- ---------------------------
+-- Plugins
+-- ---------------------------
+
 require("lazy").setup({
 	spec = {
-		-- add your plugins here
-		-- Formatter
+		-- ---------------------------
+		-- Colorscheme
+		-- ---------------------------
+		{
+			"ellisonleao/gruvbox.nvim",
+			lazy = false,
+			priority = 1000,
+			opts = {
+				terminal_colors = true,
+				contrast = "hard",
+			},
+			config = function(_, opts)
+				require("gruvbox").setup(opts)
+				vim.o.background = "dark"
+				vim.cmd.colorscheme("gruvbox")
+			end,
+		},
+
+		-- ---------------------------
+		-- Statusline
+		-- ---------------------------
+		{
+			"nvim-lualine/lualine.nvim",
+			event = "VeryLazy",
+			opts = {},
+			dependencies = { "nvim-tree/nvim-web-devicons" },
+		},
+
+		-- ---------------------------
+		-- Git
+		-- ---------------------------
+		{ "lewis6991/gitsigns.nvim", event = { "BufReadPost", "BufNewFile" }, opts = {} },
+
+		-- ---------------------------
+		-- Formatting
+		-- ---------------------------
 		{
 			"stevearc/conform.nvim",
 			event = { "BufReadPre", "BufNewFile" },
@@ -52,193 +93,262 @@ require("lazy").setup({
 			opts = {
 				formatters_by_ft = {
 					lua = { "stylua" },
-					typst = { "typstyle" },
-					ocaml = { "ocamlformat" },
-					bash = { "shfmt" },
 					sh = { "shfmt" },
-					rust = { "rustformat" },
+					bash = { "shfmt" },
+					rust = { "rustfmt" },
+					typst = { "typstyle" },
 				},
 				format_on_save = {
 					timeout_ms = 500,
 					lsp_format = "fallback",
-					lsp_fallback = true,
 				},
 			},
 		},
 
-		-- Git
-		{
-			"lewis6991/gitsigns.nvim",
-			event = { "BufReadPost", "BufNewFile" },
-		},
-
+		-- ---------------------------
 		-- Treesitter
+		-- ---------------------------
 		{
 			"nvim-treesitter/nvim-treesitter",
-			event = { "BufReadPost", "BufNewFile" },
-			cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo", "TSUpdate" },
-			build = ":TSUpdate",
 			lazy = false,
-		},
-
-		-- Statusline
-		{
-			"nvim-lualine/lualine.nvim",
-			event = "VeryLazy",
+			build = ":TSUpdate",
 			config = function()
-				require("lualine").setup()
+				local nvim_ts = require("nvim-treesitter")
+				local parser_configs = require("nvim-treesitter.parsers")
+
+				local installing = {}
+
+				vim.api.nvim_create_autocmd("FileType", {
+					group = vim.api.nvim_create_augroup("TS_AutoInstallAndStart", { clear = true }),
+					callback = function(ev)
+						local ft = ev.match
+						local lang = vim.treesitter.language.get_lang(ft)
+						if not lang or lang == "" then
+							return
+						end
+
+						-- If parser is available, start treesitter highlighting.
+						do
+							local ok = vim.treesitter.language.add(lang) -- returns (bool, err)
+							if ok then
+								pcall(vim.treesitter.start, ev.buf, lang)
+								installing[lang] = nil
+								return
+							end
+						end
+
+						-- If this language isn't in nvim-treesitter's known parser table,
+						-- don't try to install it automatically.
+						if parser_configs[lang] == nil then
+							return
+						end
+
+						-- Avoid duplicate installs
+						if installing[lang] then
+							return
+						end
+						installing[lang] = true
+
+						vim.notify(("Installing treesitter parser: %s"):format(lang), vim.log.levels.INFO)
+
+						-- Install parser + queries (async; no-op if already installed)
+						nvim_ts.install({ lang })
+
+						-- Retry start (best-effort) until parser becomes loadable
+						local tries = 40
+						local function retry()
+							if not vim.api.nvim_buf_is_valid(ev.buf) then
+								installing[lang] = nil
+								return
+							end
+
+							local ok = vim.treesitter.language.add(lang)
+							if ok then
+								pcall(vim.treesitter.start, ev.buf, lang)
+								installing[lang] = nil
+								return
+							end
+
+							tries = tries - 1
+							if tries > 0 then
+								vim.defer_fn(retry, 250)
+							else
+								installing[lang] = nil
+							end
+						end
+						retry()
+
+						vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+						vim.wo.foldmethod = "expr"
+
+						vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+					end,
+				})
 			end,
 		},
 
-		-- Colorscheme
-		{
-			"ellisonleao/gruvbox.nvim",
-			priority = 1000,
-			config = true,
-			opts = {
-				terminal_colors = true,
-				contrast = "hard",
-			},
-		},
-
-		-- Linters/Formatters
-		{
-			"nvimtools/none-ls.nvim",
-			event = { "BufReadPre", "BufNewFile" },
-			dependencies = { "nvimtools/none-ls-extras.nvim" },
-		},
-
+		-- ---------------------------
 		-- LSP
-		{
-			"neovim/nvim-lspconfig",
-			event = { "BufReadPre", "BufNewFile" },
-		},
+		-- ---------------------------
 		{
 			"mason-org/mason-lspconfig.nvim",
 			lazy = false,
-		},
-		{
-			"mason-org/mason.nvim",
-			cmd = {
-				"Mason",
-				"MasonInstall",
-				"MasonInstallAll",
-				"MasonUninstall",
-				"MasonUninstallAll",
-				"MasonLog",
+			dependencies = {
+				{ "mason-org/mason.nvim", opts = {} },
+				"neovim/nvim-lspconfig",
 			},
+			opts = {
+				ensure_installed = {
+					"bashls",
+					"clangd",
+					"hyprls",
+					"lua_ls",
+					"pyright",
+					"rust_analyzer",
+					"tinymist",
+				},
+				automatic_enable = false,
+			},
+			config = function(_, opts)
+				require("mason-lspconfig").setup(opts)
+
+				vim.lsp.config("tinymist", {
+					settings = {
+						formatterMode = "typstyle",
+					},
+				})
+
+				for _, server in ipairs(opts.ensure_installed or {}) do
+					vim.lsp.enable(server)
+				end
+			end,
 		},
 
-		-- Completions
+		-- ---------------------------
+		-- Completion
+		-- ---------------------------
 		{
 			"saghen/blink.cmp",
 			version = "1.*",
-			event = { "InsertEnter", "LspAttach" },
+			event = "InsertEnter",
 			dependencies = {
 				"rafamadriz/friendly-snippets",
 				{
 					"L3MON4D3/LuaSnip",
 					version = "v2.*",
-					opts = { history = true, updateevents = "TextChanged,TextChangedI" },
+					opts = {
+						update_events = { "TextChanged", "TextChangedI" },
+					},
 				},
+
 				{
 					"windwp/nvim-autopairs",
 					event = "InsertEnter",
 					opts = {
 						check_ts = true,
-						ts_config = { lua = { "string" }, javascript = { "template_string" }, java = false },
 						enable_check_bracket_line = false,
 						ignored_next_char = "[%w%.]",
-						fast_wrap = {},
-						disable_filetype = { "MiniPick", "vim", "minifiles" },
+						disable_filetype = { "TelescopePrompt", "vim" },
 					},
 				},
 			},
-
 			opts = {
 				keymap = { preset = "super-tab" },
-				appearance = {
-					nerd_font_variant = "mono",
-				},
-
-				completion = {
-					documentation = {
-						auto_show = false,
-					},
-					list = {
-						selection = {
-							preselect = true,
-							auto_insert = true,
-						},
-					},
-				},
-
-				sources = {
-					default = { "lsp", "path", "snippets", "buffer" },
-				},
-
+				appearance = { nerd_font_variant = "mono" },
+				completion = { documentation = { auto_show = false } },
+				sources = { default = { "lsp", "path", "snippets", "buffer" } },
 				fuzzy = { implementation = "prefer_rust_with_warning" },
 			},
-
 			opts_extend = { "sources.default" },
 		},
-		{
-			"kylechui/nvim-surround",
-			version = "^4.0.0", -- Use for stability; omit to use `main` branch for the latest features
-			event = "VeryLazy",
-			-- Optional: See `:h nvim-surround.configuration` and `:h nvim-surround.setup` for details
-			-- config = function()
-			--     require("nvim-surround").setup({
-			--         -- Put your configuration here
-			--     })
-			-- end
-		},
 
-		-- Files
+		-- ---------------------------
+		-- Surround
+		-- ---------------------------
+		{ "kylechui/nvim-surround", version = "^4.0.0", event = "VeryLazy", opts = {} },
+
+		-- ---------------------------
+		-- Telescope
+		-- ---------------------------
 		{
 			"nvim-telescope/telescope.nvim",
+			version = "*",
+			cmd = "Telescope",
+			dependencies = {
+				"nvim-lua/plenary.nvim",
+				{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+			},
+			opts = {},
 		},
+
+		-- ---------------------------
+		-- Typst
+		-- ---------------------------
 		{
 			"chomosuke/typst-preview.nvim",
-			lazy = false,
+			ft = "typst",
+			version = "1.*",
 			opts = {},
 		},
 	},
-	-- Configure any other settings here. See the documentation for more details.
-	-- colorscheme that will be used when installing plugins.
+
 	install = { colorscheme = { "gruvbox" } },
-	-- automatically check for plugin updates
 	checker = { enabled = true },
 })
 
-vim.o.background = "dark"
-vim.cmd([[colorscheme gruvbox]])
+-- ---------------------------
+-- Diagnostics
+-- ---------------------------
 
-vim.lsp.enable("bashls")
-vim.lsp.enable("clangd")
-vim.lsp.enable("hyprls")
-vim.lsp.enable("lua_ls")
-vim.lsp.enable("ocamllsp")
-vim.lsp.enable("pyright")
-vim.lsp.enable("rust_analyzer")
-vim.lsp.enable("tinymist")
+vim.diagnostic.config({ virtual_text = false })
 
-vim.lsp.config["tinymist"] = {
-	cmd = { "tinymist" },
-	filetypes = { "typst" },
-	settings = {
-		formatterMode = "typstyle",
-	},
-}
-
-vim.diagnostic.config({
-	virtual_text = false,
-})
 vim.o.updatetime = 250
-vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])
+vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+	group = vim.api.nvim_create_augroup("DiagFloat", { clear = true }),
+	callback = function()
+		vim.diagnostic.open_float(nil, { focus = false })
+	end,
+})
 
-local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
-vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
+-- ---------------------------
+-- Keymaps
+-- ---------------------------
+
+-- Telescope keymaps
+vim.keymap.set("n", "<leader>ff", function()
+	require("telescope.builtin").find_files()
+end, { desc = "Telescope find files" })
+
+vim.keymap.set("n", "<leader>fg", function()
+	require("telescope.builtin").live_grep()
+end, { desc = "Telescope live grep" })
+
+vim.keymap.set("n", "<leader>fb", function()
+	require("telescope.builtin").buffers()
+end, { desc = "Telescope buffers" })
+
+vim.keymap.set("n", "<leader>fh", function()
+	require("telescope.builtin").help_tags()
+end, { desc = "Telescope help tags" })
+
+-- Format key
+vim.keymap.set({ "n", "v" }, "<leader>f", function()
+	require("conform").format({ lsp_format = "fallback" })
+end, { desc = "Format (Conform)" })
+
+-- LSP keymaps
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = vim.api.nvim_create_augroup("LspKeymaps", { clear = true }),
+	callback = function(args)
+		local bufnr = args.buf
+		local map = function(mode, lhs, rhs, desc)
+			vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+		end
+
+		map("n", "gd", vim.lsp.buf.definition, "Go to definition")
+		map("n", "gr", vim.lsp.buf.references, "References")
+		map("n", "K", vim.lsp.buf.hover, "Hover")
+		map("n", "<leader>rn", vim.lsp.buf.rename, "Rename")
+		map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Code action")
+	end,
+})
