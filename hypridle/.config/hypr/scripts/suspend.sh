@@ -1,5 +1,5 @@
 #!/bin/sh
-MAX_LOAD_PER_CORE="${MAX_LOAD_PER_CORE:-0.75}"
+MAX_LOAD_PER_CORE="${MAX_LOAD_PER_CORE:-0.50}"
 
 CORES="$(getconf _NPROCESSORS_ONLN 2>/dev/null || echo 1)"
 LOAD1="$(awk '{print $1}' /proc/loadavg)"
