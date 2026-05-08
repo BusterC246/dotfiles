@@ -11,6 +11,8 @@ while true; do
   if awk -v l="$LOAD1" -v t="$THRESH" 'BEGIN{exit !(l >= t)}'; then
     sleep 60
   else
-    loginctl suspend
+    break
   fi
 done
+
+loginctl suspend
