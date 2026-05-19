@@ -13,10 +13,9 @@ My configuration files for various programs.
 3. Bibita-Modern-Classic Cursor Theme.
 4. [Gruvbox GTK Theme](https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme).
 
-## Usage
-### Run the following commands to apply the dotfiles:
-```Bash
-git clone https://github.com/BusterC246/dotfiles.git
-cd dotfiles
-./sync.sh
-```
+## Installation
+Run `sync.sh` to apply the dotfiles.
+
+## Removal
+Run `uninstall.sh` to remove the dotfiles.
+
