@@ -6,5 +6,5 @@ if ! command -v stow $ >/dev/null; then
 fi
 
 for DIR in *; do
-  [ -d $DIR ] && stow --restow $DIR
+  [ -d $DIR ] && stow --target=$HOME --restow $DIR
 done
