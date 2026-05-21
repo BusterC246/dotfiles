@@ -1,4 +1,4 @@
 #!/bin/sh
-if [ -f hypr/monitors.conf.local.bak ]; then
-    mv hypr/monitors.conf.local.bak hypr/monitors.conf
+if [ -f hypr/monitors.lua.local.bak ]; then
+    mv hypr/monitors.lua.local.bak hypr/monitors.lua
 fi

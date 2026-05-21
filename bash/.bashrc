@@ -13,18 +13,12 @@ if [[ $- != *i* ]]; then
   return
 fi
 
-PS1="\[\e[92;1m\]\u@\h \[\e[94m\]\w \$\[\e[0m\] "
+if [ -r "$HOME/.profile" ]; then
+  . "$HOME/.profile"
+fi
 
-source ~/.profile
+PS1="\[\e[92;1m\]\u@\h \[\e[94m\]\w \$\[\e[0m\] "
 
 set -o vi
 
-eval $(keychain --eval --quiet id_ed25519)
-
-# Aliases
-alias ls="ls -F --group-directories-first --color=always"
-alias mpa="mpv --no-audio-display"
-alias mvn="mvn -gs '$XDG_CONFIG_HOME'/maven/settings.xml"
-alias yarn="yarn --use-yarnrc '$XDG_CONFIG_HOME'/yarn/config"
-alias wget="wget --hsts-file='$XDG_CACHE_HOME'/wget-hsts"
-alias xrdb="xrdb -load '$XDG_CONFIG_HOME'/X11/xresources"
+[ -r "$HOME/.config/shell/interactive.sh" ] && . "$HOME/.config/shell/interactive.sh"
