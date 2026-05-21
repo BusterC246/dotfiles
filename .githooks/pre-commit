@@ -1,4 +1,4 @@
 #!/bin/sh
-cp hypr/monitors.conf hypr/monitors.conf.local.bak
-echo "monitor = , preferred, auto, 1" > hypr/monitors.conf
+cp hypr/monitors.lua hypr/monitors.lua.local.bak
+echo "hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })" > hypr/monitors.lua
 git add hypr/monitors.conf
