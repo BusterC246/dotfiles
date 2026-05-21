@@ -1,0 +1,4 @@
+#!/bin/sh
+cp hypr/monitors.conf hypr/monitors.conf.local.bak
+echo "monitor = , preferred, auto, 1" > hypr/monitors.conf
+git add hypr/monitors.conf
