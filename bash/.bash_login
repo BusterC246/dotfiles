@@ -1,6 +1,4 @@
-if [ -r "$HOME/.profile" ]; then
-  . "$HOME/.profile"
-fi
+[ -r "$HOME/.config/shell/env.sh" ] && . "$HOME/.config/shell/env.sh"
 
 case $- in
   *i*)
