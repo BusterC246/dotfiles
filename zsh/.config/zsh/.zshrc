@@ -21,6 +21,6 @@ mkdir -p -- "${_compdump:h}"
 compinit -d "$_compdump"
 _comp_options+=(globdots)
 
-[[ -r "$HOME/.config/shell/interactive.sh" ]] && source "$HOME/.config/shell/interactive.sh"
+[[ -r "$HOME/.config/shell/interactive.sh" ]] && . "$HOME/.config/shell/interactive.sh"
 
-source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
+. /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
