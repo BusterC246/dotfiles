@@ -46,3 +46,5 @@ build/
 *.pem
 *.key
 authorized_keys
+
+*.bak
