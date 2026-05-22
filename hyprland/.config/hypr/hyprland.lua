@@ -232,3 +232,11 @@ require("autostart")
 require("input")
 require("window_rules")
 require("monitors")
+require("master_dwindle")
+
+
+hl.config({
+  general = {
+    layout = "lua:master_dwindle",
+  },
+})
