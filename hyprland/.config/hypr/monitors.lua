@@ -1,5 +1,5 @@
-hl.monitor({ output = "DP-2", mode = "1920x1080@60", position = "0x0", scale = 1, vrr = 0 })
 hl.monitor({ output = "DP-3", mode = "2560x1440@165.0", position = "1920x0", scale = 1, vrr = 2 })
+hl.monitor({ output = "DP-2", mode = "1920x1080@60", position = "0x0", scale = 1, vrr = 0 })
 -- hl.monitor({ output = "HDMI-A-1", mode = "1280x1024@60.0", position = "4480x0", scale = 1, vrr = 0 })
 hl.monitor({ output = "HDMI-A-1", mode = "1024x768@75.0", position = "4480x0", scale = 1, vrr = 0 })
 -- hl.monitor({ output = "HDMI-A-1", mode = "800x600@85.0", position = "4480x0", scale = 1, vrr = 0 })
