@@ -26,10 +26,7 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("hypridle")
   hl.exec_cmd('"${XDG_CONFIG_HOME}"/hypr/scripts/wallpaper.sh')
   hl.exec_cmd('"${XDG_CONFIG_HOME}"/hypr/scripts/xdg-portal.sh')
-  hl.exec_cmd("xrandr --output DP-3 --primary")
 end)
-
-hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
 
 hl.config({
   general = {
