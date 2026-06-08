@@ -95,6 +95,7 @@ export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 path_append /opt/idea-community/bin
 path_append "$XDG_DATA_HOME/nvim/mason/bin"
 path_append "$XDG_DATA_HOME/cargo/bin"
+path_append "$HOME/.opencode/bin"
 export PATH
 
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
