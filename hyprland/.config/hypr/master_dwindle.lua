@@ -7,9 +7,54 @@ local function clamp(x, min, max)
   return math.max(min, math.min(max, x))
 end
 
+local function is_box(b)
+  return type(b) == "table"
+      and type(b.x) == "number"
+      and type(b.y) == "number"
+      and type(b.w) == "number"
+      and type(b.h) == "number"
+end
+
+local function split_box(box, side, ratio)
+  if not is_box(box) then
+    error("split_box: expected HL.Box {x,y,w,h}")
+  end
+
+  ratio = clamp(ratio, 0.0, 1.0)
+
+  local x, y, w, h = box.x, box.y, box.w, box.h
+
+  if side == "left" then
+    local tw    = math.floor(w * ratio)
+    local taken = { x = x, y = y, w = tw, h = h }
+    local rest  = { x = x + tw, y = y, w = w - tw, h = h }
+    return taken, rest
+  elseif side == "right" then
+    local tw    = math.floor(w * ratio)
+    local taken = { x = x + (w - tw), y = y, w = tw, h = h }
+    local rest  = { x = x, y = y, w = w - tw, h = h }
+    return taken, rest
+  elseif side == "top" or side == "up" then
+    local th    = math.floor(h * ratio)
+    local taken = { x = x, y = y, w = w, h = th }
+    local rest  = { x = x, y = y + th, w = w, h = h - th }
+    return taken, rest
+  elseif side == "bottom" or side == "down" then
+    local th    = math.floor(h * ratio)
+    local taken = { x = x, y = y + (h - th), w = w, h = th }
+    local rest  = { x = x, y = y, w = w, h = h - th }
+    return taken, rest
+  end
+
+  error("split_box: invalid side " .. tostring(side))
+end
+
 local function target_id(target)
   local window = target.window
-  return window and tostring(window.stable_id) or tostring(target.index)
+  if window and window.stable_id ~= nil then
+    return tostring(window.stable_id)
+  end
+  return tostring(target.index)
 end
 
 local function index_of(tbl, value)
@@ -78,7 +123,6 @@ local function swap_active_with_master(ctx)
 
   local id = active_id(ctx)
   local i = id and index_of(state.order, id)
-
   if not i then
     return
   end
@@ -87,29 +131,24 @@ local function swap_active_with_master(ctx)
   state.order[i], state.order[j] = state.order[j], state.order[i]
 end
 
-local opposite = {
-  left = "right",
-  right = "left",
-  top = "bottom",
-  bottom = "top",
-}
-
-local function place_slave_dwindle(ctx, targets, ids, area)
+local function place_slave_dwindle(targets, ids, area)
   local n = #ids
-
   if n == 0 then
     return
   end
+
+  local cur = area
 
   for i, id in ipairs(ids) do
     local target = targets[id]
     if target then
       if i == n then
-        target:place(area)
+        target:place(cur)
       else
         local side = (i % 2 == 1) and "top" or "left"
-        target:place(ctx:split(area, side, 0.5))
-        area = ctx:split(area, opposite[side], 0.5)
+        local taken, rest = split_box(cur, side, 0.5)
+        target:place(taken)
+        cur = rest
       end
     end
   end
@@ -119,7 +158,6 @@ hl.layout.register("master_dwindle", {
   recalculate = function(ctx)
     local targets = sync_order(ctx)
     local n = #state.order
-
     if n == 0 then
       return
     end
@@ -134,21 +172,23 @@ hl.layout.register("master_dwindle", {
       return
     end
 
-    local master_area = ctx:split(ctx.area, "left", state.mfact)
-    local slave_area = ctx:split(ctx.area, "right", 1.0 - state.mfact)
-
+    local master_area, slave_area = split_box(ctx.area, "left", state.mfact)
     master:place(master_area)
 
     local slave_ids = {}
     for i = 2, n do
-      table.insert(slave_ids, state.order[i])
+      slave_ids[#slave_ids + 1] = state.order[i]
     end
 
-    place_slave_dwindle(ctx, targets, slave_ids, slave_area)
+    place_slave_dwindle(targets, slave_ids, slave_area)
   end,
 
   layout_msg = function(ctx, msg)
     sync_order(ctx)
+
+    if type(msg) ~= "string" then
+      return "master_dwindle: layout_msg expects a string, got " .. type(msg)
+    end
 
     local command, arg = msg:match("^(%S+)%s*(.*)$")
 
