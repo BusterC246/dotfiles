@@ -19,13 +19,14 @@ hl.env("_JAVA_AWT_WM_NONREPARENTING", "1")
 
 hl.on("hyprland.start", function()
   hl.exec_cmd("dbus-update-activation-environment --all")
-  hl.exec_cmd("mako")
+  hl.exec_cmd('"${XDG_CONFIG_HOME}"/hypr/scripts/xdg-portal.sh')
+  hl.exec_cmd('"${XDG_CONFIG_HOME}"/hypr/scripts/wallpaper.sh')
+  hl.exec_cmd("gentoo-pipewire-launcher")
   hl.exec_cmd("wl-clip-persist --clipboard both")
   hl.exec_cmd("/usr/libexec/hyprpolkitagent")
-  hl.exec_cmd("gentoo-pipewire-launcher")
+  hl.exec_cmd("mako")
   hl.exec_cmd("hypridle")
-  hl.exec_cmd('"${XDG_CONFIG_HOME}"/hypr/scripts/wallpaper.sh')
-  hl.exec_cmd('"${XDG_CONFIG_HOME}"/hypr/scripts/xdg-portal.sh')
+  hl.exec_cmd("easyeffects -w")
 end)
 
 hl.config({
