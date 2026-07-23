@@ -226,6 +226,39 @@ require("lazy").setup({
           },
         })
 
+        vim.lsp.config("rust_analyzer", {
+          settings = {
+            ["rust-analyzer"] = {
+              check = {
+                command = "clippy",
+              },
+              procMacro = {
+                enable = true,
+              },
+              cargo = {
+                buildScripts = {
+                  enable = true,
+                },
+              },
+              inlayHints = {
+                lifetimeElisionHints = {
+                  enable = "skip_trivial",
+                  useParameterNames = true,
+                },
+                closureReturnTypeHints = {
+                  enable = "with_block",
+                },
+                bindingModeHints = {
+                  enable = true,
+                },
+                chainingHints = {
+                  enable = true,
+                },
+              },
+            },
+          },
+        })
+
         for _, server in ipairs(opts.ensure_installed or {}) do
           vim.lsp.enable(server)
         end
