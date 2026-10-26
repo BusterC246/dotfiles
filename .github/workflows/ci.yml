@@ -15,7 +15,7 @@ jobs:
       - name: Install stow and shellcheck
         run: |
           sudo apt-get update
-          sudo apt-get install -y stow shellcheck
+          sudo apt-get install -y stow shellcheck lua5.4 jq
 
       - name: ShellCheck all shell scripts
         run: |
@@ -35,6 +35,20 @@ jobs:
             .githooks/post-commit \
             .githooks/pre-push \
             .githooks/post-push
+
+      - name: Lua syntax check for Hyprland configs
+        run: |
+          luac -p hyprland/.config/hypr/hyprland.lua
+          luac -p hyprland/.config/hypr/autostart.lua
+          luac -p hyprland/.config/hypr/input.lua
+          luac -p hyprland/.config/hypr/master_dwindle.lua
+          luac -p hyprland/.config/hypr/monitors.lua
+          luac -p hyprland/.config/hypr/window_rules.lua
+          luac -p hyprland/.config/hypr/env.lua
+
+      - name: JSON validation for opencode config
+        run: |
+          jq empty opencode/.config/opencode/opencode.json > /dev/null
 
       - name: Stow dry-run
         run: |

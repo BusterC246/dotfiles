@@ -1,7 +1,27 @@
 #!/bin/sh
-# Pre-commit hook: replace hardware/distro-specific hyprland config files with
+# Pre-commit hook: run shellcheck on shell scripts if available,
+# then replace hardware/distro-specific hyprland config files with
 # generic defaults before committing, so upstream gets a shareable config.
 # Local versions are restored by post-commit.
+
+if command -v shellcheck >/dev/null 2>&1; then
+  shellcheck \
+    -e SC1091 \
+    sync.sh \
+    uninstall.sh \
+    hyprland/.config/hypr/scripts/wallpaper.sh \
+    hyprland/.config/hypr/scripts/xdg-portal.sh \
+    hypridle/.config/hypr/scripts/resume.sh \
+    hypridle/.config/hypr/scripts/suspend.sh \
+    shell/.config/shell/env.sh \
+    shell/.config/shell/interactive.sh \
+    bash/.bashrc \
+    bash/.bash_login \
+    .githooks/pre-commit \
+    .githooks/post-commit \
+    .githooks/pre-push \
+    .githooks/post-push || exit 1
+fi
 
 MONITORS="hyprland/.config/hypr/monitors.lua"
 AUTOSTART="hyprland/.config/hypr/autostart.lua"
