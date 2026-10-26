@@ -97,7 +97,7 @@ for DIR in $PKGS; do
 
   if [ -d "$DIR" ]; then
     echo "Stowing $DIR..."
-    if ! stow $STOW_ARGS --restow "$DIR"; then
+    if ! eval stow "$STOW_ARGS" --restow "$DIR"; then
       echo "sync: failed to stow $DIR" >&2
       exit 1
     fi

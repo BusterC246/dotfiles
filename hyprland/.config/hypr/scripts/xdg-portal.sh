@@ -7,11 +7,11 @@ killall xdg-desktop-portal-wlr
 killall xdg-desktop-portal
 logger 'killed all xdg-desktop'
 sleep 1
-$(command -v xdg-desktop-portal-gtk || echo /usr/libexec/xdg-desktop-portal-gtk) &
+eval "$(command -v xdg-desktop-portal-gtk || echo /usr/libexec/xdg-desktop-portal-gtk)" &
 logger 'xdg-desktop-portal-gtk started'
 sleep 1
-$(command -v xdg-desktop-portal-hyprland || echo /usr/libexec/xdg-desktop-portal-hyprland) &
+eval "$(command -v xdg-desktop-portal-hyprland || echo /usr/libexec/xdg-desktop-portal-hyprland)" &
 logger 'xdg-desktop-portal-hyprland started'
 sleep 2
-$(command -v xdg-desktop-portal || echo /usr/libexec/xdg-desktop-portal) &
+eval "$(command -v xdg-desktop-portal || echo /usr/libexec/xdg-desktop-portal)" &
 logger 'xdg-desktop-portal started'
