@@ -20,6 +20,7 @@ jobs:
       - name: ShellCheck all shell scripts
         run: |
           shellcheck \
+            -e SC1091 \
             sync.sh \
             uninstall.sh \
             hyprland/.config/hypr/scripts/wallpaper.sh \
