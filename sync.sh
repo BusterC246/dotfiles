@@ -54,11 +54,6 @@ SKIP="$DEFAULT_SKIP ${STOW_SKIP:-}"
 
 STOW_IGNORE='\.git$|\.gitignore$|\.git_hooks$|\.githooks$|.*\.swp$|.*\.swo$|__pycache__|node_modules|\.bak$|\.tmp$|\.log$'
 
-STOW_ARGS="--target=$HOME"
-[ "$SIMULATE" -eq 1 ] && STOW_ARGS="$STOW_ARGS --simulate"
-[ "$VERBOSE" -eq 1 ] && STOW_ARGS="$STOW_ARGS --verbose"
-STOW_ARGS="$STOW_ARGS --ignore=$STOW_IGNORE"
-
 if ! command -v stow >/dev/null 2>&1; then
   echo "sync: stow not installed" >&2
   exit 1
@@ -97,7 +92,11 @@ for DIR in $PKGS; do
 
   if [ -d "$DIR" ]; then
     echo "Stowing $DIR..."
-    if ! eval stow "$STOW_ARGS" --restow "$DIR"; then
+    SIM_FLAG=""
+    VERB_FLAG=""
+    [ "$SIMULATE" -eq 1 ] && SIM_FLAG="--simulate"
+    [ "$VERBOSE" -eq 1 ] && VERB_FLAG="--verbose"
+    if ! stow --target="$HOME" $SIM_FLAG $VERB_FLAG --ignore="$STOW_IGNORE" --restow "$DIR"; then
       echo "sync: failed to stow $DIR" >&2
       exit 1
     fi
