@@ -84,9 +84,9 @@ export SPELLLANG=en
 
 This repo is personal config. Before using it on your machine, change:
 
-- `monitors.lua` — your monitor names and positions
-- `autostart.lua` — Gentoo-specific `gentoo-pipewire-launcher`
-- `env.sh` — AMD GPU drivers and `/opt/idea-community/bin` path
+- `monitors.lua`
+- `autostart.lua`
+- `env.sh`
 
 ## License
 
