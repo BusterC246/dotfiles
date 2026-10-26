@@ -17,7 +17,7 @@ alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
 
 # Reload environment without rebooting. Useful after changing env vars in
 # env.sh; source this file again or run `shell-reload` in any running shell.
-shell-reload() {
+shell_reload() {
   . "$XDG_CONFIG_HOME/shell/env.sh"
   . "$XDG_CONFIG_HOME/shell/interactive.sh"
 }

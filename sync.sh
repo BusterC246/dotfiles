@@ -45,7 +45,7 @@ if [ -z "$PKGS" ]; then
   if [ -n "${STOW_PACKAGES:-}" ]; then
     PKGS="$STOW_PACKAGES"
   else
-    PKGS=$(ls -d */ 2>/dev/null | sed 's#/$##')
+    PKGS=$(find . -maxdepth 1 -type d -name '*' ! -name '.' ! -name '.git' ! -name '.git_hooks' ! -name '.githooks' -printf '%f\n' 2>/dev/null | sort)
   fi
 fi
 
