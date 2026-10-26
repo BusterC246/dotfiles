@@ -21,6 +21,7 @@ jobs:
         run: |
           shellcheck \
             -e SC1091 \
+            --severity=error \
             sync.sh \
             uninstall.sh \
             hyprland/.config/hypr/scripts/wallpaper.sh \
