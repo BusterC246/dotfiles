@@ -54,10 +54,10 @@ To remove everything:
 
 Most of these are cosmetic — the dotfiles will work without them, they just won't look the same. Install them if you want the Gruvbox/Dvorak look:
 
-- JetBrains Mono font
-- Papirus Dark icon theme
-- Bibata cursor theme
-- Gruvbox GTK theme
+- [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono) font — official GitHub repo by JetBrains
+- [Papirus Dark](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme) icon theme — official GitHub repo by PapirusDevelopmentTeam
+- [Bibata](https://github.com/ful1e5/Bibata_Cursor) cursor theme — official GitHub repo by ful1e5
+- [Gruvbox GTK Theme](https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme) — official GitHub repo by Fausto-Korpsvart
 
 ## Themes and appearance
 
