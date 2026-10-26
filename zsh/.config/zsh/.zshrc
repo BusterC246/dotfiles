@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 autoload -Uz colors && colors
 PS1="%F{green}%B%n@%m%f%B%F{blue} %~ %# %f"
 
@@ -14,7 +15,7 @@ KEYTIMEOUT=1
 
 autoload -Uz compinit
 zstyle ':completion:*' menu select
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS} # shellcheck disable=SC2296
 zmodload zsh/complist
 _compdump="$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
 mkdir -p -- "${_compdump:h}"
