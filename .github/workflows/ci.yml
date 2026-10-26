@@ -38,4 +38,8 @@ jobs:
 
       - name: Stow dry-run
         run: |
+          TEST_HOME=$(mktemp -d)
+          export HOME="$TEST_HOME"
+          mkdir -p "$TEST_HOME/.config"
           ./sync.sh --simulate
+          rm -rf "$TEST_HOME"
