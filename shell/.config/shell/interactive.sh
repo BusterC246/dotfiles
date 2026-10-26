@@ -1,3 +1,4 @@
+#!/usr/bin/env sh
 if command -v keychain >/dev/null 2>&1; then
   if [ -n "${XDG_RUNTIME_DIR:-}" ]; then
     eval "$(keychain --absolute --dir "$XDG_RUNTIME_DIR/keychain" --eval --quiet id_ed25519)"

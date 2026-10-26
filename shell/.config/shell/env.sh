@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 if [ "${__SHELL_ENV_SH_LOADED:-}" = "1" ]; then
   return 0
 fi

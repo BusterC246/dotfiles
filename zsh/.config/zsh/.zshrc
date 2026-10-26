@@ -1,4 +1,3 @@
-#!/usr/bin/env zsh
 autoload -Uz colors && colors
 PS1="%F{green}%B%n@%m%f%B%F{blue} %~ %# %f"
 

@@ -28,7 +28,6 @@ jobs:
             hyprland/.config/hypr/scripts/suspend.sh \
             shell/.config/shell/env.sh \
             shell/.config/shell/interactive.sh \
-            zsh/.config/zsh/.zshrc \
             bash/.bashrc \
             bash/.bash_login \
             .githooks/pre-commit \

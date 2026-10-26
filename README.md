@@ -52,20 +52,25 @@ To remove everything:
 
 ## What you need
 
-The `README` previously listed fonts and icon themes as hard requirements. Most of those are cosmetic — the dotfiles will work without them, they just won't look the same. Install them if you want the Gruvbox/Dvorak look:
+Most of these are cosmetic — the dotfiles will work without them, they just won't look the same. Install them if you want the Gruvbox/Dvorak look:
 
 - JetBrains Mono font
 - Papirus Dark icon theme
 - Bibata cursor theme
 - Gruvbox GTK theme
 
-## Making it your own
+## Themes and appearance
 
-This repo is personal config. Before using it on your machine, change:
+Here's what each theme-related package controls:
 
-- `monitors.lua` — your monitor names and positions
-- `autostart.lua` — Gentoo-specific `gentoo-pipewire-launcher`
-- `env.sh` — AMD GPU drivers and `/opt/idea-community/bin` path
+| Package | Controls | Theme used |
+|---------|----------|------------|
+| `gtk/` | GTK 4 settings | Gruvbox-Orange-Dark |
+| `ghostty/` | Ghostty terminal | Gruvbox-Dark |
+| `kvantum/` | Qt5 apps (Kvantum theme engine) | Gruvbox |
+| `kitty/` | Kitty terminal font | JetBrains Mono |
+| `wezterm/` | Wezterm terminal color scheme | Gruvbox Dark |
+| `shell/.config/shell/env.sh` | GTK theme, cursor theme, XKB layout | overridable via env vars |
 
 Most values can be overridden with environment variables instead of editing files:
 
@@ -74,7 +79,51 @@ export TERMINAL=kitty
 export BROWSER=librewolf
 export GTK_THEME=Gruvbox-Orange-Dark
 export XKBVARIANT=dvorak
+export WEZTERM_COLOR_SCHEME=Gruvbox Dark
+export SPELLLANG=en
 ```
+
+## Installation
+
+Clone the repo and run `sync.sh`:
+
+```sh
+git clone https://github.com/busterc246/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+./sync.sh
+```
+
+This stows every package except `.git`, `.git_hooks`, `.githooks`. To stow only specific packages:
+
+```sh
+STOW_PACKAGES="zsh shell" ./sync.sh
+```
+
+To skip packages:
+
+```sh
+STOW_SKIP="hyprland gtk" ./sync.sh
+```
+
+To see what would happen without changing anything:
+
+```sh
+./sync.sh --simulate
+```
+
+To remove everything:
+
+```sh
+./uninstall.sh
+```
+
+## Making it your own
+
+This repo is personal config. Before using it on your machine, change:
+
+- `monitors.lua` — your monitor names and positions
+- `autostart.lua` — Gentoo-specific `gentoo-pipewire-launcher`
+- `env.sh` — AMD GPU drivers and `/opt/idea-community/bin` path
 
 ## License
 
