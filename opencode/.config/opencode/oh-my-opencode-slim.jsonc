@@ -1,0 +1,591 @@
+{
+  "$schema": "https://unpkg.com/oh-my-opencode-slim@latest/oh-my-opencode-slim.schema.json",
+  "preset": "free",
+  "setDefaultAgent": true,
+  "disabled_agents": [
+    "multimodal-looker"
+  ],
+  "disabled_tools": [],
+  "disabled_skills": [],
+  "disabled_hooks": [],
+  "disabled_commands": [],
+  "disabled_mcps": [],
+  "image_routing": "direct",
+  "multiplexer": {
+    "type": "none",
+    "layout": "main-vertical",
+    "main_pane_size": 60,
+    "viewer": "mini"
+  },
+  "backgroundJobs": {
+    "maxSessionsPerAgent": 2,
+    "orchestratorWake": {
+      "enabled": true,
+      "intervalMs": 300000,
+      "mode": "auto",
+      "periodicWakeEnabled": true,
+      "wakeOnTerminalPublication": true,
+      "publicationWakeMinIntervalMs": 30000
+    },
+    "wallClockTimeoutMs": 0,
+    "abortGraceMs": 10000,
+    "stopConfirmationMs": 5000,
+    "concurrency": {
+      "defaultConcurrency": 4,
+      "providerConcurrency": {},
+      "modelConcurrency": {}
+    },
+    "sameProviderPolicy": {},
+    "childInputWake": true,
+    "childInputWakeKinds": {
+      "permission": false,
+      "question": true
+    },
+    "waitForUserGuard": true,
+    "boardInjection": true,
+    "pruneEvictedSessions": false
+  },
+  "fallback": {
+    "enabled": true,
+    "maxRetries": 5,
+    "initialRetryDelayMs": 1000,
+    "retryDelayMs": 1000,
+    "continuationPolicy": "retry-primary"
+  },
+  "webfetch": {
+    "enabled": true
+  },
+  "deepworkGuardMode": "shadow",
+  "autoUpdate": true,
+  "compactSidebar": true,
+  "interview": {
+    "maxQuestions": 3,
+    "outputFolder": "interview",
+    "autoOpenBrowser": true,
+    "port": 0,
+    "dashboard": false,
+    "printState": false
+  },
+  "council": {
+    "presets": {
+      "default": {
+        "orchestrator": {
+          "model": "opencode/nemotron-3-ultra-free",
+          "variant": "high"
+        },
+        "councillor-deepseek": {
+          "model": "opencode/deepseek-v4.1-flash-free",
+          "variant": "high"
+        },
+        "councillor-flint": {
+          "model": "opencode/flint-40b-free",
+          "variant": "high"
+        },
+        "councillor-beam": {
+          "model": "opencode/beam-free",
+          "variant": "high"
+        },
+        "councillor-minimax": {
+          "model": "opencode/minimax-m3.1-flash-free",
+          "variant": "high"
+        }
+      }
+    },
+    "default_preset": "default"
+  },
+  "acpAgents": {},
+  "agents": {
+    "oracle": {
+      "permission": {
+        "edit": "deny",
+        "bash": "ask",
+        "task": "allow"
+      },
+      "mcps": []
+    },
+    "explorer": {
+      "permission": {
+        "edit": "deny",
+        "bash": "ask",
+        "task": "allow"
+      },
+      "mcps": []
+    },
+    "librarian": {
+      "permission": {
+        "edit": "deny",
+        "bash": "ask",
+        "task": "allow"
+      },
+      "mcps": [
+        "context7",
+        "gh_grep"
+      ]
+    },
+    "multimodal-looker": {
+      "permission": {
+        "edit": "deny",
+        "bash": "deny",
+        "task": "allow"
+      },
+      "mcps": []
+    },
+    "sisyphus": {
+      "permission": {
+        "*": "allow",
+        "task": {
+          "observer": "allow"
+        }
+      },
+      "mcps": [
+        "*",
+        "!context7"
+      ],
+      "prompt": "<Role>\nYou are Sisyphus, the main orchestration agent. You plan, delegate, monitor,\nreconcile, and verify specialist work. Delegate non-trivial work to\nspecialists; act directly only when you already hold the needed context and\nthe change is small and clear (a delegate starts cold and must re-load it).\n\nValue productivity: prefer a working result now over a perfect plan later;\ndon't stall on decisions you can make and revisit.\n</Role>\n\n<Agents>\n@explorer \u2014 read-only codebase recon (glob/grep/AST) and external docs/web research (context7, gh_grep). Delegate: discovery, parallel searches, changing APIs, official examples, tricky bugs. Don't: known path / need full contents / stable facts already in context.\n\n@oracle \u2014 architecture, risk, debugging strategy, review; an escalation, not a default verification step. Delegate: major long-term decisions, problems persisting after 2+ fix attempts, high-risk trade-offs, simplification.\n\n@designer \u2014 owns all UI/UX: layout, hierarchy, spacing, motion, responsive feel. Never do UI/design work yourself.\n\n@fixer \u2014 bounded, well-defined implementation. Delegate: multi-file or mechanical changes, parallel per-area lanes. Don't: discovery/decisions, one small (<20-line) change, anything needing design judgment.\n\n@hephaestus \u2014 build agent, refactoring, code edits, build/verify cycle.\n\n@atlas \u2014 execution agent, carries out approved work plans with boulder state.\n\n@prometheus \u2014 planner, creates work plans, boulder state, plan files.\n\n@metis \u2014 plan consultant, architecture review, plan consultation.\n\n@momus \u2014 plan reviewer, QA gate review, plan review, final approval (read-only). Dispatch @momus for verification after implementation.\n\n@multimodal-looker \u2014 visual analysis of images/PDFs/diagrams (read-only).\n\n@sisyphus-junior \u2014 junior orchestration, assisted task execution with notepad state.\n</Agents>\n\n<Workflow>\n- Build in passes: a working outline first, then structure, then detail.\n  Match review depth to how settled the work is, and stop once the request\n  is met \u2014 no perfection loops.\n- Split work into independent lanes and dispatch in parallel (multiple\n  `subagent`/`task` calls in one message).\n- Respect dependencies; parallel writers must not share write scopes.\n- Every delegation names its scope and validation owner. Reference\n  paths/lines instead of pasting file contents.\n- Assign lanes focused checks for their scope, never the full suite. Run the\n  full suite once yourself after reconciling writers.\n- After dispatching, do non-overlapping work, then end the turn; completion\n  notifications and the wake scheduler resume you.\n- Use the `todowrite` tool to track multi-step work; keep the todo list\n  current as tasks progress.\n\n## Verification (MANDATORY)\n- After every implementation task, dispatch @momus (QA gate review) to\n  verify quality, correctness, and edge cases.\n- For architecture changes, dispatch @oracle for review.\n- For refactoring, dispatch @oracle to confirm no regressions.\n- For bug fixes, dispatch @oracle to confirm root cause and fix.\n- Subagent summaries are claims, not evidence: read the produced artifacts\n  before relying on them.\n\n## File operations\n- Prefer dedicated file tools: glob/grep for discovery, read for contents,\n  edit/write for changes. Avoid cat/head/tail/sed/awk just to read code.\n- Use bash for execution, automation, and bulk/mechanical filesystem changes.\n\n## Child sessions\n- When earlier tasks may already cover the objective, check task_status\n  before dispatching a new one.\n- Continue a completed session with subagent by exact id; cancelled/errored/\n  stopped sessions use task_revive.\n- Use task_message to amend a running lane; task_cancel only when the user\n  asks or the lane is obsolete.\n\n## Communication\n- Use the question tool when the user's answer unblocks work.\n- Minimal replies: no preamble, no flattery, no restating the request.\n- Honest pushback: state the concern and an alternative concisely.\n</Workflow>\npath: .config/opencode/oh-my-opencode-slim/sisyphus.md"
+    },
+    "hephaestus": {
+      "permission": {
+        "*": "allow",
+        "task": {
+          "observer": "allow"
+        }
+      },
+      "mcps": []
+    },
+    "prometheus": {
+      "permission": {
+        "edit": "allow",
+        "bash": "ask",
+        "task": {
+          "observer": "allow"
+        }
+      },
+      "mcps": []
+    },
+    "metis": {
+      "permission": {
+        "edit": "deny",
+        "bash": "ask",
+        "task": {
+          "observer": "allow"
+        }
+      },
+      "mcps": [
+        "context7",
+        "gh_grep"
+      ]
+    },
+    "momus": {
+      "permission": {
+        "edit": "deny",
+        "bash": "deny",
+        "task": "allow"
+      },
+      "mcps": []
+    },
+    "atlas": {
+      "permission": {
+        "*": "allow",
+        "task": {
+          "observer": "allow"
+        }
+      },
+      "mcps": [
+        "*",
+        "!context7"
+      ]
+    },
+    "sisyphus-junior": {
+      "permission": {
+        "*": "allow",
+        "task": {
+          "observer": "allow"
+        }
+      },
+      "mcps": []
+    },
+    "designer": {
+      "prompt": "<Role>\nYou are Designer, the UI/UX specialist. You own all UI/UX decisions: layout, hierarchy, spacing, motion, responsive feel, and visual design. Never do UI/design work yourself for the user — instead, guide and specify designs that implementation agents (@fixer, @hephaestus) can build. You are weak at user-facing copy: review and fix copy afterward without altering visuals; purely mechanical follow-ups go to @fixer.\n</Role>\n\n<Agents>\n@fixer — bounded implementation. Delegate: mechanical UI changes, CSS edits, component updates.\n@hephaestus — build agent. Delegate: refactoring, code edits, build/verify cycle for UI code.\n</Agents>\n\n<Workflow>\n- Specify layout, spacing, hierarchy, motion, and responsive behavior before implementation.\n- Review user-facing copy for clarity and tone after visuals are set.\n- Keep designs simple and consistent; avoid over-engineering.\n- Delegate mechanical implementation to @fixer or @hephaestus.\n</Workflow>\n",
+    "observer": {
+      "model": [
+        {
+          "id": "nvidia/nvidia/nemotron-3.5-super-vl-120b-a12b",
+          "variant": "medium"
+        },
+        {
+          "id": "nvidia/meta/llama-3.2-90b-vision-instruct",
+          "variant": "medium"
+        },
+        {
+          "id": "nvidia/meta/llama-3.2-11b-vision-instruct",
+          "variant": "low"
+        }
+      ],
+      "variant": "medium",
+      "permission": {
+        "task": {
+          "*": "deny"
+        }
+      }
+    },
+    "fixer": {
+      "permission": {
+        "task": {
+          "observer": "allow"
+        }
+      }
+    }
+  },
+  "presets": {
+    "free": {
+      "orchestrator": {
+        "model": [
+          "opencode/nemotron-3.5-super-vl-free",
+          {
+            "id": "opencode/nemotron-3-ultra-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/deepseek-v4.1-flash-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/flint-40b-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/beam-free",
+            "variant": "high"
+          }
+        ],
+        "variant": "high",
+        "skills": [
+          "*"
+        ],
+        "mcps": [
+          "*",
+          "!context7"
+        ],
+        "description": "Master delegator and strategic coordinator (vision-capable, high reasoning, unlimited free fallbacks)"
+      },
+      "oracle": {
+        "model": [
+          "opencode/nemotron-3-ultra-free",
+          {
+            "id": "opencode/nemotron-3.5-super-vl-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/deepseek-v4.1-flash-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/flint-40b-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/beam-free",
+            "variant": "high"
+          }
+        ],
+        "variant": "high",
+        "skills": [
+          "simplify",
+          "verification"
+        ],
+        "mcps": [],
+        "description": "Strategic advisor, debugger, and QA gate reviewer (high reasoning, unlimited free fallbacks)"
+      },
+      "explorer": {
+        "model": [
+          "opencode/beam-free",
+          {
+            "id": "opencode/flint-40b-free",
+            "variant": "low"
+          },
+          {
+            "id": "opencode/glm-5.3-flash-free",
+            "variant": "low"
+          },
+          {
+            "id": "opencode/deepseek-v4.1-flash-free",
+            "variant": "low"
+          }
+        ],
+        "variant": "low",
+        "skills": [],
+        "mcps": [],
+        "description": "Codebase reconnaissance and external research (fast, token-efficient)"
+      },
+      "fixer": {
+        "model": [
+          "opencode/deepseek-v4.1-flash-free",
+          {
+            "id": "opencode/nemotron-3.5-super-vl-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/flint-40b-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/beam-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/glm-5.3-flash-free",
+            "variant": "low"
+          }
+        ],
+        "variant": "high",
+        "skills": [
+          "refactor",
+          "verification"
+        ],
+        "mcps": [],
+        "description": "Implementation specialist \u2014 refactoring, edits, TDD verification (high reasoning, unlimited free fallbacks)"
+      },
+      "designer": {
+        "model": [
+          "opencode/nemotron-3.5-super-vl-free",
+          {
+            "id": "opencode/deepseek-v4.1-flash-free",
+            "variant": "medium"
+          },
+          {
+            "id": "opencode/flint-40b-free",
+            "variant": "medium"
+          },
+          {
+            "id": "opencode/beam-free",
+            "variant": "medium"
+          }
+        ],
+        "variant": "medium",
+        "skills": [],
+        "mcps": [],
+        "description": "UI/UX implementation and visual excellence (vision-capable, balanced, unlimited free fallbacks)"
+      },
+      "librarian": {
+        "model": [
+          "opencode/flint-40b-free",
+          {
+            "id": "opencode/beam-free",
+            "variant": "low"
+          },
+          {
+            "id": "opencode/glm-5.3-flash-free",
+            "variant": "low"
+          },
+          {
+            "id": "opencode/deepseek-v4.1-flash-free",
+            "variant": "low"
+          }
+        ],
+        "variant": "low",
+        "skills": [
+          "memory"
+        ],
+        "mcps": [
+          "context7",
+          "gh_grep"
+        ],
+        "description": "Documentation, code lookup, and persistent memory (token-efficient)"
+      },
+      "sisyphus": {
+        "model": [
+          "opencode/nemotron-3.5-super-vl-free",
+          {
+            "id": "opencode/nemotron-3-ultra-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/deepseek-v4.1-flash-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/flint-40b-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/beam-free",
+            "variant": "high"
+          }
+        ],
+        "variant": "high",
+        "skills": [
+          "ultrawork",
+          "memory",
+          "verification"
+        ],
+        "mcps": [
+          "*",
+          "!context7"
+        ],
+        "description": "Main orchestration agent \u2014 ultrawork loop, boulder state, goal tracking"
+      },
+      "hephaestus": {
+        "model": [
+          "opencode/deepseek-v4.1-flash-free",
+          {
+            "id": "opencode/nemotron-3.5-super-vl-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/flint-40b-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/beam-free",
+            "variant": "high"
+          }
+        ],
+        "variant": "high",
+        "skills": [
+          "refactor",
+          "verification"
+        ],
+        "mcps": [],
+        "description": "Build agent \u2014 refactoring, code edits, build/verify cycle"
+      },
+      "prometheus": {
+        "model": [
+          "opencode/nemotron-3-ultra-free",
+          {
+            "id": "opencode/nemotron-3.5-super-vl-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/deepseek-v4.1-flash-free",
+            "variant": "high"
+          }
+        ],
+        "variant": "high",
+        "skills": [
+          "ultrawork",
+          "memory"
+        ],
+        "mcps": [],
+        "description": "Planner agent \u2014 creates work plans, boulder state, plan files"
+      },
+      "metis": {
+        "model": [
+          "opencode/nemotron-3-ultra-free",
+          {
+            "id": "opencode/nemotron-3.5-super-vl-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/deepseek-v4.1-flash-free",
+            "variant": "high"
+          }
+        ],
+        "variant": "high",
+        "skills": [
+          "memory",
+          "verification"
+        ],
+        "mcps": [
+          "context7",
+          "gh_grep"
+        ],
+        "description": "Plan consultant \u2014 architecture review, plan consultation"
+      },
+      "momus": {
+        "model": [
+          "opencode/nemotron-3-ultra-free",
+          {
+            "id": "opencode/nemotron-3.5-super-vl-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/deepseek-v4.1-flash-free",
+            "variant": "high"
+          }
+        ],
+        "variant": "high",
+        "skills": [
+          "verification"
+        ],
+        "mcps": [],
+        "description": "Plan reviewer \u2014 QA gate review, plan review, final approval (read-only)"
+      },
+      "atlas": {
+        "model": [
+          "opencode/nemotron-3.5-super-vl-free",
+          {
+            "id": "opencode/deepseek-v4.1-flash-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/flint-40b-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/beam-free",
+            "variant": "high"
+          }
+        ],
+        "variant": "high",
+        "skills": [
+          "ultrawork",
+          "refactor",
+          "verification"
+        ],
+        "mcps": [
+          "*",
+          "!context7"
+        ],
+        "description": "Execution agent \u2014 carries out approved work plans with boulder state"
+      },
+      "sisyphus-junior": {
+        "model": [
+          "opencode/deepseek-v4.1-flash-free",
+          {
+            "id": "opencode/glm-5.3-flash-free",
+            "variant": "medium"
+          },
+          {
+            "id": "opencode/flint-40b-free",
+            "variant": "low"
+          },
+          {
+            "id": "opencode/beam-free",
+            "variant": "low"
+          },
+          {
+            "id": "opencode/mimo-v2.6-flash-free",
+            "variant": "low"
+          }
+        ],
+        "variant": "medium",
+        "skills": [
+          "refactor"
+        ],
+        "mcps": [],
+        "description": "Junior orchestration agent \u2014 assisted task execution with notepad state"
+      },
+      "multimodal-looker": {
+        "model": [
+          "opencode/nemotron-3.5-super-vl-free",
+          {
+            "id": "nvidia/nvidia/nemotron-3.5-super-vl-120b-a12b",
+            "variant": "medium"
+          },
+          {
+            "id": "nvidia/meta/llama-3.2-90b-vision-instruct",
+            "variant": "medium"
+          },
+          {
+            "id": "nvidia/meta/llama-3.2-11b-vision-instruct",
+            "variant": "low"
+          }
+        ],
+        "variant": "medium",
+        "skills": [],
+        "mcps": [],
+        "description": "Visual analysis agent \u2014 images, PDFs, diagrams (read-only, NVIDIA vision models + opencode free tier)"
+      }
+    }
+  }
+}

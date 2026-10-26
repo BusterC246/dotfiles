@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install stow and shellcheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y stow shellcheck
+
+      - name: ShellCheck all shell scripts
+        run: |
+          shellcheck \
+            sync.sh \
+            uninstall.sh \
+            hyprland/.config/hypr/scripts/wallpaper.sh \
+            hyprland/.config/hypr/scripts/xdg-portal.sh \
+            hyprland/.config/hypr/scripts/resume.sh \
+            hyprland/.config/hypr/scripts/suspend.sh \
+            shell/.config/shell/env.sh \
+            shell/.config/shell/interactive.sh \
+            zsh/.config/zsh/.zshrc \
+            bash/.bashrc \
+            bash/.bash_login \
+            .githooks/pre-commit \
+            .githooks/post-commit \
+            .githooks/pre-push \
+            .githooks/post-push
+
+      - name: Stow dry-run
+        run: |
+          ./sync.sh --simulate

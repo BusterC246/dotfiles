@@ -20,10 +20,9 @@ hl.env("_JAVA_AWT_WM_NONREPARENTING", "1")
 hl.on("hyprland.start", function()
   hl.exec_cmd("dbus-update-activation-environment --all")
   hl.exec_cmd('"${XDG_CONFIG_HOME}"/hypr/scripts/xdg-portal.sh')
-  hl.exec_cmd('"${XDG_CONFIG_HOME}"/hypr/scripts/wallpaper.sh')
-  hl.exec_cmd("gentoo-pipewire-launcher")
+
   hl.exec_cmd("wl-clip-persist --clipboard both")
-  hl.exec_cmd("/usr/libexec/hyprpolkitagent")
+  hl.exec_cmd("command -v hyprpolkitagent >/dev/null 2>&1 && hyprpolkitagent || [ -x /usr/libexec/hyprpolkitagent ] && /usr/libexec/hyprpolkitagent")
   hl.exec_cmd("mako")
   hl.exec_cmd("hypridle")
   hl.exec_cmd("easyeffects -w")
@@ -139,9 +138,9 @@ hl.window_rule({ match = { class = "^(jetbrains)" }, float = true, border_size =
 hl.window_rule({ match = { class = "^(jetbrains)", title = "^(win)" }, float = true, no_focus = true })
 
 local mainMod = "SUPER"
-local term = "kitty"
-local menu = "eval $(tofi-drun --font /usr/share/fonts/jetbrains-mono/JetBrainsMono-Regular.ttf --ascii-input true)"
-local browser = "librewolf"
+local term = os.getenv("TERMINAL") or "kitty"
+local menu = "eval $(tofi-drun --font 'JetBrains Mono' --ascii-input true)"
+local browser = os.getenv("BROWSER") or "librewolf"
 
 hl.bind(mainMod .. " + return", hl.dsp.exec_cmd(term))
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(browser))
@@ -197,14 +196,18 @@ hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("ddcutil setvcp 10 + 15 || brightnessctl set 5%+"),
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(
+  "command -v brightnessctl >/dev/null 2>&1 && brightnessctl set 5%+ || command -v ddcutil >/dev/null 2>&1 && ddcutil setvcp 10 + 15 || true"),
   { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("ddcutil setvcp 10 - 15 || brightnessctl set 5%-"),
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(
+  "command -v brightnessctl >/dev/null 2>&1 && brightnessctl set 5%- || command -v ddcutil >/dev/null 2>&1 && ddcutil setvcp 10 - 15 || true"),
   { locked = true, repeating = true })
 
-hl.bind("xF86KbdBrightnessUp", hl.dsp.exec_cmd("brightnessctl -d *::kbd_backlight set 33%+"),
+hl.bind("xF86KbdBrightnessUp", hl.dsp.exec_cmd(
+  "command -v brightnessctl >/dev/null 2>&1 && brightnessctl -d *::kbd_backlight set 33%+ || true"),
   { locked = true, repeating = true })
-hl.bind("xF86KbdBrightnessDown", hl.dsp.exec_cmd("brightnessctl -d *::kbd_backlight set 33%-"),
+hl.bind("xF86KbdBrightnessDown", hl.dsp.exec_cmd(
+  "command -v brightnessctl >/dev/null 2>&1 && brightnessctl -d *::kbd_backlight set 33%- || true"),
   { locked = true, repeating = true })
 
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"),

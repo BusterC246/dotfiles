@@ -39,7 +39,7 @@ return {
 	color_schemes = {
 		["Gruvbox Dark"] = scheme,
 	},
-	color_scheme = "Gruvbox Dark",
+	color_scheme = os.getenv("WEZTERM_COLOR_SCHEME") or "Gruvbox Dark",
 	enable_tab_bar = false,
 	default_cursor_style = "SteadyBar",
 	term = "xterm-color",

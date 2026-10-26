@@ -24,3 +24,8 @@ _comp_options+=(globdots)
 [[ -r "$HOME/.config/shell/interactive.sh" ]] && . "$HOME/.config/shell/interactive.sh"
 
 . /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
+
+# opencode
+export PATH="$HOME/.opencode/bin:$PATH"
+
+. "$HOME/.local/bin/env"
