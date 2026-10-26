@@ -47,4 +47,17 @@ build/
 *.key
 authorized_keys
 
+# Opencode machine-specific runtime state (not synced via stow)
+opencode/.config/opencode/service.json
+opencode/.config/opencode/cli.json
+opencode/.config/opencode/tui.json
+opencode/.config/opencode/.omo/
+opencode/.config/opencode/*.write-lock
+
+# Ignore .omo directories anywhere in the repo
+.omo/
+
+# Course-specific formatters (not tracked)
+ece2300-format/
+
 *.bak

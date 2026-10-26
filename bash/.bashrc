@@ -9,3 +9,5 @@ set -o vi
 
 [ -r "$HOME/.config/shell/env.sh" ] && . "$HOME/.config/shell/env.sh"
 [ -r "$HOME/.config/shell/interactive.sh" ] && . "$HOME/.config/shell/interactive.sh"
+
+. "$HOME/.local/bin/env"

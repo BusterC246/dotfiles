@@ -1,0 +1,225 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "opencode/nemotron-3-ultra-free",
+  "small_model": "opencode/glm-5.3-flash-free",
+  "default_agent": "sisyphus",
+  "plugin": [
+    "oh-my-opencode-slim",
+    "@tarquinen/opencode-dcp@latest",
+    "opencode-snip@latest"
+  ],
+  "instructions": [
+    "AGENTS.md"
+  ],
+  "agent": {
+    "explore": {
+      "disable": true
+    },
+    "general": {
+      "disable": true
+    },
+    "sisyphus": {
+      "mode": "primary",
+      "model": "opencode/nemotron-3.5-super-vl-free",
+      "permission": {
+        "*": "allow",
+        "todowrite": "allow"
+      },
+      "prompt": "<Role>\nYou are Sisyphus, the main orchestration agent. You plan, delegate, monitor,\nreconcile, and verify specialist work. Delegate non-trivial work to\nspecialists; act directly only when you already hold the needed context and\nthe change is small and clear (a delegate starts cold and must re-load it).\n\nValue productivity: prefer a working result now over a perfect plan later;\ndon't stall on decisions you can make and revisit.\n</Role>\n\n<Agents>\n@explorer \u2014 read-only codebase recon (glob/grep/AST) and external docs/web research (context7, gh_grep). Delegate: discovery, parallel searches, changing APIs, official examples, tricky bugs. Don't: known path / need full contents / stable facts already in context.\n\n@oracle \u2014 architecture, risk, debugging strategy, review; an escalation, not a default verification step. Delegate: major long-term decisions, problems persisting after 2+ fix attempts, high-risk trade-offs, simplification.\n\n@designer \u2014 owns all UI/UX: layout, hierarchy, spacing, motion, responsive feel. Never do UI/design work yourself.\n\n@fixer \u2014 bounded, well-defined implementation. Delegate: multi-file or mechanical changes, parallel per-area lanes. Don't: discovery/decisions, one small (<20-line) change, anything needing design judgment.\n\n@hephaestus \u2014 build agent, refactoring, code edits, build/verify cycle.\n\n@atlas \u2014 execution agent, carries out approved work plans with boulder state.\n\n@prometheus \u2014 planner, creates work plans, boulder state, plan files.\n\n@metis \u2014 plan consultant, architecture review, plan consultation.\n\n@momus \u2014 plan reviewer, QA gate review, plan review, final approval (read-only). Dispatch @momus for verification after implementation.\n\n@observer \u2014 visual analysis specialist (vision-capable). Analyzes images, screenshots, PDFs, diagrams via OCR and visual interpretation. Keeps media bytes out of your context \u2014 pass the full file path. Use to assist any agent that lacks vision support. Don't: plain-text files.\n\n@sisyphus-junior \u2014 junior orchestration, assisted task execution with notepad state.\n</Agents>\n\n<Workflow>\n- Build in passes: a working outline first, then structure, then detail.\n  Match review depth to how settled the work is, and stop once the request\n  is met \u2014 no perfection loops.\n- Split work into independent lanes and dispatch in parallel (multiple\n  `subagent`/`task` calls in one message).\n- Respect dependencies; parallel writers must not share write scopes.\n- Every delegation names its scope and validation owner. Reference\n  paths/lines instead of pasting file contents.\n- Assign lanes focused checks for their scope, never the full suite. Run the\n  full suite once yourself after reconciling writers.\n- After dispatching, do non-overlapping work, then end the turn; completion\n  notifications and the wake scheduler resume you.\n- Use the `todowrite` tool to track multi-step work; keep the todo list\n  current as tasks progress.\n\n## Verification (MANDATORY)\n- After every implementation task, dispatch @momus (QA gate review) to\n  verify quality, correctness, and edge cases.\n- For architecture changes, dispatch @oracle for review.\n- For refactoring, dispatch @oracle to confirm no regressions.\n- For bug fixes, dispatch @oracle to confirm root cause and fix.\n- Subagent summaries are claims, not evidence: read the produced artifacts\n  before relying on them.\n\n## File operations\n- Prefer dedicated file tools: glob/grep for discovery, read for contents,\n  edit/write for changes. Avoid cat/head/tail/sed/awk just to read code.\n- Use bash for execution, automation, and bulk/mechanical filesystem changes.\n\n## Child sessions\n- When earlier tasks may already cover the objective, check task_status\n  before dispatching a new one.\n- Continue a completed session with subagent by exact id; cancelled/errored/\n  stopped sessions use task_revive.\n- Use task_message to amend a running lane; task_cancel only when the user\n  asks or the lane is obsolete.\n\n## Communication\n- Use the question tool when the user's answer unblocks work.\n- Minimal replies: no preamble, no flattery, no restating the request.\n- Honest pushback: state the concern and an alternative concisely.\n</Workflow>\npath: .config/opencode/oh-my-opencode-slim/sisyphus.md"
+    }
+  },
+  "lsp": {
+    "clangd": {
+      "command": [
+        "clangd"
+      ],
+      "extensions": [
+        ".c",
+        ".cpp",
+        ".cc",
+        ".cxx",
+        ".c++",
+        ".h",
+        ".hpp",
+        ".hh",
+        ".hxx",
+        ".h++"
+      ],
+      "initialization": {
+        "clangdFileStatus": true
+      }
+    },
+    "rust": {
+      "command": [
+        "rust-analyzer"
+      ],
+      "extensions": [
+        ".rs"
+      ],
+      "env": {
+        "RUST_LOG": "info"
+      }
+    },
+    "deno": {
+      "command": [
+        "deno"
+      ],
+      "extensions": [
+        ".ts",
+        ".tsx",
+        ".js",
+        ".jsx",
+        ".mjs",
+        ".cjs",
+        ".mts",
+        ".cts"
+      ],
+      "initialization": {
+        "enable": true,
+        "lint": true,
+        "unstable": false
+      }
+    },
+    "typescript": {
+      "command": [
+        "npx",
+        "-y",
+        "typescript-language-server",
+        "--stdio"
+      ],
+      "extensions": [
+        ".ts",
+        ".tsx",
+        ".js",
+        ".jsx",
+        ".mjs",
+        ".cjs",
+        ".mts",
+        ".cts"
+      ]
+    },
+    "python": {
+      "command": [
+        "pylsp"
+      ],
+      "extensions": [
+        ".py",
+        ".pyi"
+      ],
+      "initialization": {
+        "plugins": {
+          "jedi_completion": {
+            "enabled": true
+          },
+          "jedi_hover": {
+            "enabled": true
+          },
+          "jedi_references": {
+            "enabled": true
+          },
+          "jedi_signature_help": {
+            "enabled": true
+          },
+          "jedi_symbols": {
+            "enabled": true
+          },
+          "mccabe": {
+            "enabled": true
+          },
+          "pycodestyle": {
+            "enabled": true
+          },
+          "pydocstyle": {
+            "enabled": true
+          },
+          "pyflakes": {
+            "enabled": true
+          },
+          "rope_completion": {
+            "enabled": true
+          },
+          "yapf": {
+            "enabled": true
+          }
+        }
+      }
+    },
+    "go": {
+      "command": [
+        "gopls"
+      ],
+      "extensions": [
+        ".go"
+      ],
+      "initialization": {
+        "usePlaceholders": true,
+        "completeUnimported": true,
+        "deepCompletion": true,
+        "matcher": "fuzzy",
+        "caseSensitiveCompletion": false,
+        "symbolStyle": "Dynamic"
+      }
+    }
+  },
+  "permissions": [
+    {
+      "action": "skill",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "read",
+      "resource": ".",
+      "effect": "allow"
+    },
+    {
+      "action": "write",
+      "resource": ".",
+      "effect": "allow"
+    },
+    {
+      "action": "edit",
+      "resource": ".",
+      "effect": "allow"
+    },
+    {
+      "action": "list",
+      "resource": ".",
+      "effect": "allow"
+    },
+    {
+      "action": "glob",
+      "resource": ".",
+      "effect": "allow"
+    },
+    {
+      "action": "grep",
+      "resource": ".",
+      "effect": "allow"
+    },
+    {
+      "action": "external_directory",
+      "resource": "/tmp",
+      "effect": "allow"
+    }
+  ],
+  "compaction": {
+    "auto": true,
+    "keep": {
+      "tokens": 24000
+    },
+    "buffer": 16000
+  },
+  "provider": {
+    "opencode": {
+      "options": {
+        "timeout": 120000,
+        "chunkTimeout": 120000
+      }
+    }
+  },
+  "experimental": {
+    "subagent_depth": 3,
+    "todo": true
+  }
+}

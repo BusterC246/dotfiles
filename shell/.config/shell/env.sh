@@ -69,32 +69,35 @@ path_append() {
   esac
 }
 
-export LIBVA_DRIVER_NAME=radeonsi
-export RUSTICL_ENABLE=radeonsi
-export VDPAU_DRIVER=radeonsi
+export OPENCODE_ENABLE_EXA=1
+export OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS=true
+export LIBVA_DRIVER_NAME="${LIBVA_DRIVER_NAME:-radeonsi}"
+export RUSTICL_ENABLE="${RUSTICL_ENABLE:-radeonsi}"
+export VDPAU_DRIVER="${VDPAU_DRIVER:-radeonsi}"
 
 export CLICOLOR=1
-export GTK_THEME="Gruvbox-Orange-Dark"
-export HYPRCURSOR_SIZE=24
+export GTK_THEME="${GTK_THEME:-Gruvbox-Orange-Dark}"
+export HYPRCURSOR_SIZE="${HYPRCURSOR_SIZE:-24}"
 export MOZ_DBUS_REMOTE=1
 export PROTON_NO_WM_DECORATION=1
 export QT_QPA_PLATFORMTHEME="qt5ct"
 export QT_STYLE_OVERRIDE="kvantum"
 export WINE_NO_WM_DECORATION=1
-export XCURSOR_SIZE=24
-export XCURSOR_THEME="Bibata-Modern-Classic"
-export XKBLAYOUT="us"
-export XKBVARIANT="dvorak"
-export XKB_DEFAULT_LAYOUT="us"
-export XKB_DEFAULT_VARIANT="dvorak"
+export XCURSOR_SIZE="${XCURSOR_SIZE:-24}"
+export XCURSOR_THEME="${XCURSOR_THEME:-Bibata-Modern-Classic}"
+export XKBLAYOUT="${XKBLAYOUT:-us}"
+export XKBVARIANT="${XKBVARIANT:-dvorak}"
+export XKB_DEFAULT_LAYOUT="${XKB_DEFAULT_LAYOUT:-us}"
+export XKB_DEFAULT_VARIANT="${XKB_DEFAULT_VARIANT:-dvorak}"
 
 export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
 
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 
-path_append /opt/idea-community/bin
+[ -d /opt/idea-community/bin ] && path_append /opt/idea-community/bin
 path_append "$XDG_DATA_HOME/nvim/mason/bin"
 path_append "$XDG_DATA_HOME/cargo/bin"
+path_append "$XDG_DATA_HOME/go/bin"
 path_append "$HOME/.opencode/bin"
 path_append "$HOME/.bun/bin"
 export PATH

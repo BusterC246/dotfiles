@@ -1,0 +1,42 @@
+#!/bin/sh
+# Pre-push hook: replace hardware/distro-specific hyprland config files with
+# generic defaults before pushing upstream, so the upstream repo stays
+# shareable. Local versions are restored by post-push.
+
+MONITORS="hyprland/.config/hypr/monitors.lua"
+AUTOSTART="hyprland/.config/hypr/autostart.lua"
+MONITORS_BACKUP="$MONITORS.local.bak"
+AUTOSTART_BACKUP="$AUTOSTART.local.bak"
+
+if [ -f "$MONITORS" ]; then
+  cp "$MONITORS" "$MONITORS_BACKUP"
+  cat > "$MONITORS" <<'EOF'
+-- Monitor configuration — hardware-specific, replace with your own outputs
+-- Example:
+-- hl.monitor({ output = "DP-1", mode = "2560x1440@165.0", position = "0x0", scale = 1 })
+
+hl.monitor({
+    output = "",
+    mode = "preferred",
+    position = "auto",
+    scale = 1,
+})
+
+hl.config({
+    cursor = {
+        no_break_fs_vrr = 1,
+        min_refresh_rate = 48,
+    },
+})
+EOF
+fi
+
+if [ -f "$AUTOSTART" ]; then
+  cp "$AUTOSTART" "$AUTOSTART_BACKUP"
+  cat > "$AUTOSTART" <<'EOF'
+hl.on("hyprland.start", function()
+  hl.exec_cmd("v4l2-ctl --set-parm=30 --set-fmt-video=width=1920,height=1080,pixelformat=MJPG --device /dev/video0")
+  -- hl.exec_cmd("gentoo-pipewire-launcher")  -- Gentoo-only; enable if needed
+end)
+EOF
+fi

@@ -13,3 +13,11 @@ alias mvn='mvn --settings "$XDG_CONFIG_HOME/maven/settings.xml"'
 alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
 alias xrdb='xrdb -load "$XDG_CONFIG_HOME/X11/xresources"'
 alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
+
+# Reload environment without rebooting. Useful after changing env vars in
+# env.sh; source this file again or run `shell-reload` in any running shell.
+shell-reload() {
+  . "$XDG_CONFIG_HOME/shell/env.sh"
+  . "$XDG_CONFIG_HOME/shell/interactive.sh"
+}
+alias env-reload='. "$XDG_CONFIG_HOME/shell/env.sh"'
