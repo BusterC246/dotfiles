@@ -54,10 +54,9 @@ To remove everything:
 
 Most of these are cosmetic — the dotfiles will work without them, they just won't look the same. Install them if you want the Gruvbox/Dvorak look:
 
-- [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono) font — official GitHub repo by JetBrains
-- [Papirus Dark](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme) icon theme — official GitHub repo by PapirusDevelopmentTeam
-- [Bibata](https://github.com/ful1e5/Bibata_Cursor) cursor theme — official GitHub repo by ful1e5
-- [Gruvbox GTK Theme](https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme) — official GitHub repo by Fausto-Korpsvart
+- [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono) font — official GitHub repo by JetBrains (already installed on this system)
+- [Bibata](https://github.com/ful1e5/Bibata_Cursor) cursor theme — official GitHub repo by ful1e5 (already installed on this system)
+- [Ayu-Dark](https://github.com/dempfi/ayu) theme — official GitHub repo by dempfi (already installed on this system; this is the original Ayu color scheme, ported to GTK)
 
 ## Themes and appearance
 
@@ -65,9 +64,9 @@ Here's what each theme-related package controls:
 
 | Package | Controls | Theme used |
 |---------|----------|------------|
-| `gtk/` | GTK 4 settings | Gruvbox-Orange-Dark |
-| `ghostty/` | Ghostty terminal | Gruvbox-Dark |
-| `kvantum/` | Qt5 apps (Kvantum theme engine) | Gruvbox |
+| `gtk/` | GTK 4 settings | Gruvbox-Orange-Dark (not installed) |
+| `ghostty/` | Ghostty terminal | Ayu-Dark |
+| `kvantum/` | Qt5 apps (Kvantum theme engine) | AyuDark |
 | `kitty/` | Kitty terminal font | JetBrains Mono |
 | `wezterm/` | Wezterm terminal color scheme | Gruvbox Dark |
 | `shell/.config/shell/env.sh` | GTK theme, cursor theme, XKB layout | overridable via env vars |
