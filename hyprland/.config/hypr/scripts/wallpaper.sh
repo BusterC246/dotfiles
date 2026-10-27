@@ -12,6 +12,5 @@ FILE=$(find "$WALLPAPER_DIR" -type f ! -name "wallpaper.png" | shuf -n 1 2>/dev/
 cp "$FILE" "$WALLPAPER_FILE"
 
 if command -v hyprctl >/dev/null 2>&1; then
-    hyprctl hyprpaper preload "$WALLPAPER_FILE" 2>/dev/null || true
-    hyprctl hyprpaper wallpaper ",$WALLPAPER_FILE,cover" 2>/dev/null || true
+  hyprctl hyprpaper wallpaper ",$WALLPAPER_FILE,cover" 2>/dev/null || true
 fi
