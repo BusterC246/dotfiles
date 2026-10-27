@@ -12,7 +12,8 @@ set -eu
 
 REPO_DIR=$(CDPATH='' cd -- "$(dirname -- "$0")/.." && pwd)
 TMP_HOME=$(mktemp -d)
-trap 'rm -rf "$TMP_HOME"' EXIT INT TERM
+FIXTURE=$(mktemp -d)
+trap 'rm -rf "$TMP_HOME" "$FIXTURE"' EXIT INT TERM
 
 HOME="$TMP_HOME"
 export HOME
@@ -46,3 +47,28 @@ done
 
 count=$(find "$TMP_HOME" -mindepth 1 -maxdepth 1 | wc -l)
 printf 'OK: %s dot-paths linked into the home directory, nothing leaked\n' "$count"
+
+# The guard must also reject a package that would leak, and must reject a
+# directory that has nothing to link into $HOME.
+mkdir -p "$FIXTURE/bad/.config" "$FIXTURE/tooling"
+: > "$FIXTURE/bad/README.md"
+: > "$FIXTURE/tooling/run.sh"
+(
+  cd "$FIXTURE" || exit 1
+  . "$REPO_DIR/scripts/stow-lib.sh"
+
+  is_stow_package bad || {
+    echo "FAIL: package with a dot-entry was not detected"
+    exit 1
+  }
+  if is_stow_package tooling; then
+    echo "FAIL: directory without dot-entries was treated as a package"
+    exit 1
+  fi
+  if check_package_layout bad 2>/dev/null; then
+    echo "FAIL: package with a non-dot entry was accepted"
+    exit 1
+  fi
+)
+
+printf 'OK: guard rejects leaking packages and non-packages\n'
