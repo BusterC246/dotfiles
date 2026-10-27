@@ -15,6 +15,14 @@
 # Environment:
 #   STOW_PACKAGES  Space-separated list of packages to stow
 #   STOW_SKIP      Space-separated list of packages to skip
+#
+# A package is a top-level directory whose contents mirror $HOME, so it may
+# only contain dot-entries (.config, .local, .zshenv, ...). Repo-only
+# directories such as .github or scripts are never stowed.
+
+REPO_DIR=$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd) || exit 1
+cd "$REPO_DIR" || exit 1
+. "$REPO_DIR/scripts/stow-lib.sh"
 
 SIMULATE=0
 VERBOSE=0
@@ -28,24 +36,20 @@ while [ $# -gt 0 ]; do
     check)      COMMAND="check" ;;
     --)         shift; break ;;
     -*)         echo "sync: unknown option: $1" >&2; exit 1 ;;
-    *)          PKGS="$1" ;;
+    *)          PKGS="${PKGS:+$PKGS }$1" ;;
   esac
   shift
 done
 
 for arg in "$@"; do
-  if [ -z "$PKGS" ]; then
-    PKGS="$arg"
-  else
-    PKGS="$PKGS $arg"
-  fi
+  PKGS="${PKGS:+$PKGS }$arg"
 done
 
 if [ -z "$PKGS" ]; then
   if [ -n "${STOW_PACKAGES:-}" ]; then
     PKGS="$STOW_PACKAGES"
   else
-    PKGS=$(find . -maxdepth 1 -type d -name '*' ! -name '.' ! -name '.git' ! -name '.git_hooks' ! -name '.githooks' -printf '%f\n' 2>/dev/null | sort)
+    PKGS=$(list_stow_packages)
   fi
 fi
 
@@ -54,8 +58,34 @@ SKIP="$DEFAULT_SKIP ${STOW_SKIP:-}"
 
 STOW_IGNORE='\.git$|\.gitignore$|\.git_hooks$|\.githooks$|.*\.swp$|.*\.swo$|__pycache__|node_modules|\.bak$|\.tmp$|\.log$'
 
+# Drop skipped packages before anything else looks at the list.
+SELECTED=""
+for DIR in $PKGS; do
+  skip=0
+  for S in $SKIP; do
+    if [ "$DIR" = "$S" ]; then
+      skip=1
+      break
+    fi
+  done
+  [ "$skip" -eq 1 ] && continue
+  SELECTED="${SELECTED:+$SELECTED }$DIR"
+done
+PKGS="$SELECTED"
+
 if ! command -v stow >/dev/null 2>&1; then
   echo "sync: stow not installed" >&2
+  exit 1
+fi
+
+# Refuse to run if any package would link a non-dot path into $HOME.
+FAILED=0
+for DIR in $PKGS; do
+  check_package_layout "$DIR" || FAILED=1
+done
+
+if [ "$FAILED" -ne 0 ]; then
+  echo "sync: refusing to stow; fix the paths above." >&2
   exit 1
 fi
 
@@ -63,20 +93,13 @@ if [ "$COMMAND" = "check" ]; then
   echo "Checking dotfiles sync readiness..."
   echo "stow: $(command -v stow)"
   echo "Packages: $PKGS"
+  echo "Not packages: $(list_ignored_dirs)"
   echo "Skipping: $SKIP"
   echo ""
 
   for DIR in $PKGS; do
-    skip=0
-    for S in $SKIP; do
-      [ "$DIR" = "$S" ] && skip=1 && break
-    done
-    [ "$skip" -eq 1 ] && continue
-
-    if [ -d "$DIR" ]; then
-      echo "Would stow: $DIR"
-      stow --simulate --target="$HOME" --ignore="$STOW_IGNORE" "$DIR" 2>&1 || true
-    fi
+    echo "Would stow: $DIR"
+    stow --simulate --target="$HOME" --ignore="$STOW_IGNORE" "$DIR" 2>&1 || true
   done
   exit 0
 fi
@@ -84,22 +107,13 @@ fi
 git config core.hooksPath .githooks
 
 for DIR in $PKGS; do
-  skip=0
-  for S in $SKIP; do
-    [ "$DIR" = "$S" ] && skip=1 && break
-  done
-  [ "$skip" -eq 1 ] && continue
-
-  if [ -d "$DIR" ]; then
-    echo "Stowing $DIR..."
-    SIM_FLAG=""
-    VERB_FLAG=""
-    [ "$SIMULATE" -eq 1 ] && SIM_FLAG="--simulate"
-    [ "$VERBOSE" -eq 1 ] && VERB_FLAG="--verbose"
-    if ! stow --target="$HOME" $SIM_FLAG $VERB_FLAG --ignore="$STOW_IGNORE" --restow "$DIR"; then
-      echo "sync: failed to stow $DIR" >&2
-      exit 1
-    fi
+  echo "Stowing $DIR..."
+  set -- --target="$HOME" --ignore="$STOW_IGNORE" --restow
+  [ "$SIMULATE" -eq 1 ] && set -- "$@" --simulate
+  [ "$VERBOSE" -eq 1 ] && set -- "$@" --verbose
+  if ! stow "$@" "$DIR"; then
+    echo "sync: failed to stow $DIR" >&2
+    exit 1
   fi
 done
 

@@ -23,6 +23,8 @@ jobs:
             -e SC1091 \
             sync.sh \
             uninstall.sh \
+            scripts/stow-lib.sh \
+            scripts/test-stow.sh \
             hyprland/.config/hypr/scripts/wallpaper.sh \
             hyprland/.config/hypr/scripts/xdg-portal.sh \
             hypridle/.config/hypr/scripts/resume.sh \
@@ -68,10 +70,5 @@ jobs:
             exit 1
           fi
 
-      - name: Stow dry-run
-        run: |
-          TEST_HOME=$(mktemp -d)
-          export HOME="$TEST_HOME"
-          mkdir -p "$TEST_HOME/.config"
-          ./sync.sh --simulate
-          rm -rf "$TEST_HOME"
+      - name: Stow into a throwaway HOME
+        run: ./scripts/test-stow.sh

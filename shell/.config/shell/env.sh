@@ -100,6 +100,7 @@ export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 path_append "$XDG_DATA_HOME/nvim/mason/bin"
 path_append "$XDG_DATA_HOME/cargo/bin"
 path_append "$XDG_DATA_HOME/go/bin"
+path_append "$HOME/.local/bin"
 path_append "$HOME/.opencode/bin"
 path_append "$HOME/.bun/bin"
 export PATH

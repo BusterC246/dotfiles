@@ -1,6 +1,6 @@
 # Dotfiles
 
-Personal configuration files managed with [GNU Stow](https://www.gnu.org/software/stow/). Each top-level directory is a stow package that gets linked into `$HOME`.
+Personal configuration files managed with [GNU Stow](https://www.gnu.org/software/stow/). Any top-level directory whose contents are dot-entries (`.config`, `.local`, `.zshenv`) is a stow package and gets linked into `$HOME`. Directories that only hold repo tooling, such as `.github` and `scripts`, are never linked.
 
 [![CI](https://github.com/busterc246/dotfiles/actions/workflows/ci.yml/badge.svg)](https://github.com/busterc246/dotfiles/actions/workflows/ci.yml)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
@@ -26,7 +26,7 @@ cd ~/.dotfiles
 ./sync.sh
 ```
 
-This stows every package except `.git`, `.git_hooks`, `.githooks`, `x11`, and `opencode`. To stow only specific packages:
+This stows every package. Directories without dot-entries, such as `.github` and `scripts`, are skipped, and `sync.sh` refuses to run if a package would link a non-dot path into `$HOME`. To stow only specific packages:
 
 ```sh
 STOW_PACKAGES="zsh shell" ./sync.sh
