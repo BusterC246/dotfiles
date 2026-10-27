@@ -50,6 +50,9 @@ jobs:
         run: |
           jq empty opencode/.config/opencode/opencode.json > /dev/null
 
+      - name: Validate JSONC configs
+        run: node scripts/validate-jsonc.mjs
+
       - name: Stow dry-run
         run: |
           TEST_HOME=$(mktemp -d)
