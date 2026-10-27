@@ -53,6 +53,21 @@ jobs:
       - name: Validate JSONC configs
         run: node scripts/validate-jsonc.mjs
 
+      - name: Reject absolute symlinks
+        run: |
+          found=""
+          while read -r hash path; do
+            target=$(git cat-file -p "$hash")
+            case "$target" in
+              /*) found="$found$path -> $target"$'\n' ;;
+            esac
+          done < <(git ls-files -s | awk '$1 == "120000" { print $2, $4 }')
+          if [ -n "$found" ]; then
+            echo "Tracked symlinks must be relative to stay portable:"
+            printf '%s' "$found"
+            exit 1
+          fi
+
       - name: Stow dry-run
         run: |
           TEST_HOME=$(mktemp -d)
