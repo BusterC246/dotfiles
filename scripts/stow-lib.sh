@@ -11,6 +11,19 @@
 # Keeping this rule here means the two scripts can never disagree about what
 # a package is.
 
+# Deliberate exceptions: root-level non-dot entries that are meant to be
+# linked into $HOME. Keep this list tiny; anything else at a package root is
+# a bug. `hypr.sh` is the launcher that has always lived at ~/hypr.sh.
+STOW_ALLOWED_ROOT_ENTRIES=${STOW_ALLOWED_ROOT_ENTRIES:-"hypr.sh"}
+
+# stow_root_entry_allowed NAME — true if NAME is an intentional home-dir link.
+stow_root_entry_allowed() {
+  for _allowed in $STOW_ALLOWED_ROOT_ENTRIES; do
+    [ "$1" = "$_allowed" ] && return 0
+  done
+  return 1
+}
+
 # has_dot_entries DIR — true if DIR contains at least one hidden entry.
 has_dot_entries() {
   for _entry in "$1"/.[!.]* "$1"/..?*; do
@@ -71,8 +84,11 @@ check_package_layout() {
   _bad=0
   for _entry in "$1"/*; do
     if [ -e "$_entry" ] || [ -L "$_entry" ]; then
-      echo "sync: $1/${_entry##*/} would be linked to \$HOME/${_entry##*/}" >&2
+      _name=${_entry##*/}
+      stow_root_entry_allowed "$_name" && continue
+      echo "sync: $1/$_name would be linked to \$HOME/$_name" >&2
       echo "      move it under a dot-directory (for example .local/bin/)" >&2
+      echo "      or add it to STOW_ALLOWED_ROOT_ENTRIES in scripts/stow-lib.sh" >&2
       _bad=1
     fi
   done

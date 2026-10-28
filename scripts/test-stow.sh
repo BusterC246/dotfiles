@@ -23,18 +23,24 @@ cd "$REPO_DIR"
 echo "Stowing every package into $TMP_HOME..."
 ./sync.sh >/dev/null
 
-leaks=$(find "$TMP_HOME" -mindepth 1 -maxdepth 1 ! -name '.*' -print)
+leaks=$(find "$TMP_HOME" -mindepth 1 -maxdepth 1 ! -name '.*' ! -name 'hypr.sh' -print)
 if [ -n "$leaks" ]; then
   printf 'FAIL: non-dot entries were linked into the home directory:\n%s\n' "$leaks"
   exit 1
 fi
 
-for leaked in ISSUE_TEMPLATE workflows dependabot.yml PULL_REQUEST_TEMPLATE.md validate-jsonc.mjs hypr.sh; do
+for leaked in ISSUE_TEMPLATE workflows dependabot.yml PULL_REQUEST_TEMPLATE.md validate-jsonc.mjs; do
   if [ -e "$TMP_HOME/$leaked" ] || [ -L "$TMP_HOME/$leaked" ]; then
     printf 'FAIL: %s was stowed into the home directory\n' "$leaked"
     exit 1
   fi
 done
+
+# hypr.sh is the one deliberate non-dot link: it has always been ~/hypr.sh.
+if [ ! -e "$TMP_HOME/hypr.sh" ]; then
+  echo "FAIL: expected hypr.sh to be linked into the home directory"
+  exit 1
+fi
 
 # A package that silently stopped being detected would hide its files, so make
 # sure the packages we expect are actually linked.

@@ -26,7 +26,7 @@ cd ~/.dotfiles
 ./sync.sh
 ```
 
-This stows every package. Directories without dot-entries, such as `.github` and `scripts`, are skipped, and `sync.sh` refuses to run if a package would link a non-dot path into `$HOME`. To stow only specific packages:
+This stows every package. Directories without dot-entries, such as `.github` and `scripts`, are skipped, and `sync.sh` refuses to run if a package would link a non-dot path into `$HOME`. The only deliberate exception is `hyprland/hypr.sh`, which is linked to `~/hypr.sh`; add any further exceptions to `STOW_ALLOWED_ROOT_ENTRIES` in `scripts/stow-lib.sh`. To stow only specific packages:
 
 ```sh
 STOW_PACKAGES="zsh shell" ./sync.sh
