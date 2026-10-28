@@ -28,6 +28,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("mako")
 	hl.exec_cmd("hypridle")
 	hl.exec_cmd("hyprpaper")
+	hl.exec_cmd("${XDG_CONFIG_HOME}/hypr/scripts/wallpaper.sh")
 	hl.exec_cmd("easyeffects -w")
 end)
 

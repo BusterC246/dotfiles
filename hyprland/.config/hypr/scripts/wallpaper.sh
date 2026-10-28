@@ -12,5 +12,14 @@ FILE=$(find "$WALLPAPER_DIR" -type f ! -name "wallpaper.png" | shuf -n 1 2>/dev/
 cp "$FILE" "$WALLPAPER_FILE"
 
 if command -v hyprctl >/dev/null 2>&1; then
-  hyprctl hyprpaper wallpaper ",$WALLPAPER_FILE,cover" 2>/dev/null || true
+  # hyprpaper may still be starting when this runs at login, so retry until
+  # its IPC socket accepts the request (~5s max).
+  i=0
+  while [ "$i" -lt 50 ]; do
+    if hyprctl hyprpaper wallpaper ",$WALLPAPER_FILE,cover" >/dev/null 2>&1; then
+      exit 0
+    fi
+    i=$((i + 1))
+    sleep 0.1
+  done
 fi
