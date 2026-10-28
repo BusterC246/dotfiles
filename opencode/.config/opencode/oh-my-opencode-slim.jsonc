@@ -50,7 +50,7 @@
     "maxRetries": 5,
     "initialRetryDelayMs": 1000,
     "retryDelayMs": 1000,
-    "continuationPolicy": "retry-primary"
+    "continuationPolicy": "stick-to-fallback"
   },
   "webfetch": {
     "enabled": true
@@ -70,23 +70,25 @@
     "presets": {
       "default": {
         "orchestrator": {
-          "model": "opencode/nemotron-3-ultra-free",
-          "variant": "high"
+          "model": "opencode/nemotron-3-ultra-free"
         },
         "councillor-deepseek": {
           "model": "opencode/deepseek-v4.1-flash-free",
+          "variant": "high"
+        },
+        "councillor-supervl": {
+          "model": "opencode/nemotron-3.5-super-vl-free",
           "variant": "high"
         },
         "councillor-flint": {
           "model": "opencode/flint-40b-free",
           "variant": "high"
         },
+        "councillor-mimo": {
+          "model": "opencode/mimo-v2.6-flash-free"
+        },
         "councillor-beam": {
           "model": "opencode/beam-free",
-          "variant": "high"
-        },
-        "councillor-minimax": {
-          "model": "opencode/minimax-m3.1-flash-free",
           "variant": "high"
         }
       }
@@ -209,20 +211,10 @@
     },
     "observer": {
       "model": [
-        {
-          "id": "nvidia/nvidia/nemotron-3.5-super-vl-120b-a12b",
-          "variant": "medium"
-        },
-        {
-          "id": "nvidia/meta/llama-3.2-90b-vision-instruct",
-          "variant": "medium"
-        },
-        {
-          "id": "nvidia/meta/llama-3.2-11b-vision-instruct",
-          "variant": "low"
-        }
+        "nvidia/nvidia/nemotron-3.5-super-vl-120b-a12b",
+        "nvidia/meta/llama-3.2-90b-vision-instruct",
+        "nvidia/meta/llama-3.2-11b-vision-instruct"
       ],
-      "variant": "medium",
       "permission": {
         "task": {
           "*": "deny"
@@ -241,15 +233,15 @@
     "free": {
       "orchestrator": {
         "model": [
-          "opencode/nemotron-3.5-super-vl-free",
           {
-            "id": "opencode/nemotron-3-ultra-free",
+            "id": "opencode/nemotron-3.5-super-vl-free",
             "variant": "high"
           },
           {
             "id": "opencode/deepseek-v4.1-flash-free",
             "variant": "high"
           },
+          "opencode/nemotron-3-ultra-free",
           {
             "id": "opencode/flint-40b-free",
             "variant": "high"
@@ -259,7 +251,6 @@
             "variant": "high"
           }
         ],
-        "variant": "high",
         "skills": [
           "*"
         ],
@@ -267,123 +258,111 @@
           "*",
           "!context7"
         ],
-        "description": "Master delegator and strategic coordinator (vision-capable, high reasoning, unlimited free fallbacks)"
+        "description": "Master delegator and strategic coordinator (vision, 1M context, strongest coder as fallback)"
       },
       "oracle": {
         "model": [
           "opencode/nemotron-3-ultra-free",
           {
-            "id": "opencode/nemotron-3.5-super-vl-free",
+            "id": "opencode/deepseek-v4.1-flash-free",
             "variant": "high"
           },
           {
-            "id": "opencode/deepseek-v4.1-flash-free",
+            "id": "opencode/nemotron-3.5-super-vl-free",
             "variant": "high"
           },
           {
             "id": "opencode/flint-40b-free",
             "variant": "high"
-          },
-          {
-            "id": "opencode/beam-free",
-            "variant": "high"
           }
         ],
-        "variant": "high",
         "skills": [
           "simplify",
           "verification"
         ],
         "mcps": [],
-        "description": "Strategic advisor, debugger, and QA gate reviewer (high reasoning, unlimited free fallbacks)"
+        "description": "Strategic advisor, debugger, and QA gate reviewer (deepest reasoning and 1M context first)"
       },
       "explorer": {
         "model": [
-          "opencode/beam-free",
+          "opencode/flint-40b-free",
+          "opencode/nemotron-3.5-lightning-free",
           {
-            "id": "opencode/flint-40b-free",
-            "variant": "low"
-          },
-          {
-            "id": "opencode/glm-5.3-flash-free",
-            "variant": "low"
+            "id": "opencode/beam-free",
+            "variant": "high"
           },
           {
             "id": "opencode/deepseek-v4.1-flash-free",
             "variant": "low"
           }
         ],
-        "variant": "low",
         "skills": [],
         "mcps": [],
-        "description": "Codebase reconnaissance and external research (fast, token-efficient)"
+        "description": "Codebase reconnaissance and external research (fastest models, wide context)"
       },
       "fixer": {
         "model": [
-          "opencode/deepseek-v4.1-flash-free",
           {
-            "id": "opencode/nemotron-3.5-super-vl-free",
+            "id": "opencode/deepseek-v4.1-flash-free",
             "variant": "high"
           },
+          "opencode/mimo-v2.6-flash-free",
           {
             "id": "opencode/flint-40b-free",
             "variant": "high"
           },
           {
-            "id": "opencode/beam-free",
+            "id": "opencode/glm-5.3-flash-free",
             "variant": "high"
           },
           {
-            "id": "opencode/glm-5.3-flash-free",
-            "variant": "low"
+            "id": "opencode/nemotron-3.5-super-vl-free",
+            "variant": "high"
           }
         ],
-        "variant": "high",
         "skills": [
           "refactor",
           "verification"
         ],
         "mcps": [],
-        "description": "Implementation specialist \u2014 refactoring, edits, TDD verification (high reasoning, unlimited free fallbacks)"
+        "description": "Implementation specialist — refactoring, edits, TDD verification (strongest coder first)"
       },
       "designer": {
         "model": [
-          "opencode/nemotron-3.5-super-vl-free",
+          {
+            "id": "opencode/nemotron-3.5-super-vl-free",
+            "variant": "medium"
+          },
           {
             "id": "opencode/deepseek-v4.1-flash-free",
-            "variant": "medium"
+            "variant": "high"
           },
           {
-            "id": "opencode/flint-40b-free",
-            "variant": "medium"
+            "id": "opencode/glm-5.3-flash-free",
+            "variant": "high"
           },
-          {
-            "id": "opencode/beam-free",
-            "variant": "medium"
-          }
+          "opencode/mimo-v2.6-flash-free"
         ],
-        "variant": "medium",
         "skills": [],
         "mcps": [],
-        "description": "UI/UX implementation and visual excellence (vision-capable, balanced, unlimited free fallbacks)"
+        "description": "UI/UX implementation and visual excellence (vision-first, balanced reasoning)"
       },
       "librarian": {
         "model": [
           "opencode/flint-40b-free",
           {
             "id": "opencode/beam-free",
-            "variant": "low"
+            "variant": "high"
           },
           {
             "id": "opencode/glm-5.3-flash-free",
-            "variant": "low"
+            "variant": "high"
           },
           {
             "id": "opencode/deepseek-v4.1-flash-free",
             "variant": "low"
           }
         ],
-        "variant": "low",
         "skills": [
           "memory"
         ],
@@ -391,19 +370,19 @@
           "context7",
           "gh_grep"
         ],
-        "description": "Documentation, code lookup, and persistent memory (token-efficient)"
+        "description": "Documentation, code lookup, and persistent memory (fast, long-context, token-efficient)"
       },
       "sisyphus": {
         "model": [
-          "opencode/nemotron-3.5-super-vl-free",
           {
-            "id": "opencode/nemotron-3-ultra-free",
+            "id": "opencode/nemotron-3.5-super-vl-free",
             "variant": "high"
           },
           {
             "id": "opencode/deepseek-v4.1-flash-free",
             "variant": "high"
           },
+          "opencode/nemotron-3-ultra-free",
           {
             "id": "opencode/flint-40b-free",
             "variant": "high"
@@ -413,7 +392,6 @@
             "variant": "high"
           }
         ],
-        "variant": "high",
         "skills": [
           "ultrawork",
           "memory",
@@ -423,13 +401,12 @@
           "*",
           "!context7"
         ],
-        "description": "Main orchestration agent \u2014 ultrawork loop, boulder state, goal tracking"
+        "description": "Main orchestration agent — ultrawork loop, boulder state, goal tracking"
       },
       "hephaestus": {
         "model": [
-          "opencode/deepseek-v4.1-flash-free",
           {
-            "id": "opencode/nemotron-3.5-super-vl-free",
+            "id": "opencode/deepseek-v4.1-flash-free",
             "variant": "high"
           },
           {
@@ -437,51 +414,49 @@
             "variant": "high"
           },
           {
-            "id": "opencode/beam-free",
+            "id": "opencode/nemotron-3.5-super-vl-free",
             "variant": "high"
-          }
+          },
+          "opencode/mimo-v2.6-flash-free"
         ],
-        "variant": "high",
         "skills": [
           "refactor",
           "verification"
         ],
         "mcps": [],
-        "description": "Build agent \u2014 refactoring, code edits, build/verify cycle"
+        "description": "Build agent — refactoring, code edits, build/verify cycle (strongest coder first)"
       },
       "prometheus": {
         "model": [
           "opencode/nemotron-3-ultra-free",
           {
-            "id": "opencode/nemotron-3.5-super-vl-free",
+            "id": "opencode/deepseek-v4.1-flash-free",
             "variant": "high"
           },
           {
-            "id": "opencode/deepseek-v4.1-flash-free",
+            "id": "opencode/nemotron-3.5-super-vl-free",
             "variant": "high"
           }
         ],
-        "variant": "high",
         "skills": [
           "ultrawork",
           "memory"
         ],
         "mcps": [],
-        "description": "Planner agent \u2014 creates work plans, boulder state, plan files"
+        "description": "Planner agent — creates work plans, boulder state, plan files (long-context reasoning)"
       },
       "metis": {
         "model": [
           "opencode/nemotron-3-ultra-free",
           {
-            "id": "opencode/nemotron-3.5-super-vl-free",
+            "id": "opencode/deepseek-v4.1-flash-free",
             "variant": "high"
           },
           {
-            "id": "opencode/deepseek-v4.1-flash-free",
+            "id": "opencode/nemotron-3.5-super-vl-free",
             "variant": "high"
           }
         ],
-        "variant": "high",
         "skills": [
           "memory",
           "verification"
@@ -490,44 +465,42 @@
           "context7",
           "gh_grep"
         ],
-        "description": "Plan consultant \u2014 architecture review, plan consultation"
+        "description": "Plan consultant — architecture review, plan consultation (long-context reasoning)"
       },
       "momus": {
         "model": [
           "opencode/nemotron-3-ultra-free",
           {
-            "id": "opencode/nemotron-3.5-super-vl-free",
+            "id": "opencode/deepseek-v4.1-flash-free",
             "variant": "high"
           },
           {
-            "id": "opencode/deepseek-v4.1-flash-free",
+            "id": "opencode/nemotron-3.5-super-vl-free",
             "variant": "high"
           }
         ],
-        "variant": "high",
         "skills": [
           "verification"
         ],
         "mcps": [],
-        "description": "Plan reviewer \u2014 QA gate review, plan review, final approval (read-only)"
+        "description": "Plan reviewer — QA gate review, plan review, final approval (read-only)"
       },
       "atlas": {
         "model": [
-          "opencode/nemotron-3.5-super-vl-free",
           {
             "id": "opencode/deepseek-v4.1-flash-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/nemotron-3.5-super-vl-free",
             "variant": "high"
           },
           {
             "id": "opencode/flint-40b-free",
             "variant": "high"
           },
-          {
-            "id": "opencode/beam-free",
-            "variant": "high"
-          }
+          "opencode/mimo-v2.6-flash-free"
         ],
-        "variant": "high",
         "skills": [
           "ultrawork",
           "refactor",
@@ -537,55 +510,53 @@
           "*",
           "!context7"
         ],
-        "description": "Execution agent \u2014 carries out approved work plans with boulder state"
+        "description": "Execution agent — carries out approved work plans with boulder state"
       },
       "sisyphus-junior": {
         "model": [
-          "opencode/deepseek-v4.1-flash-free",
+          {
+            "id": "opencode/deepseek-v4.1-flash-free",
+            "variant": "high"
+          },
           {
             "id": "opencode/glm-5.3-flash-free",
-            "variant": "medium"
+            "variant": "high"
           },
           {
             "id": "opencode/flint-40b-free",
-            "variant": "low"
+            "variant": "high"
           },
+          "opencode/mimo-v2.6-flash-free",
           {
-            "id": "opencode/beam-free",
-            "variant": "low"
-          },
-          {
-            "id": "opencode/mimo-v2.6-flash-free",
-            "variant": "low"
+            "id": "opencode/nemotron-3.5-super-vl-free",
+            "variant": "medium"
           }
         ],
-        "variant": "medium",
         "skills": [
           "refactor"
         ],
         "mcps": [],
-        "description": "Junior orchestration agent \u2014 assisted task execution with notepad state"
+        "description": "Junior orchestration agent — assisted task execution with notepad state"
       },
       "multimodal-looker": {
         "model": [
-          "opencode/nemotron-3.5-super-vl-free",
           {
-            "id": "nvidia/nvidia/nemotron-3.5-super-vl-120b-a12b",
+            "id": "opencode/nemotron-3.5-super-vl-free",
             "variant": "medium"
           },
           {
-            "id": "nvidia/meta/llama-3.2-90b-vision-instruct",
-            "variant": "medium"
+            "id": "opencode/deepseek-v4.1-flash-free",
+            "variant": "high"
           },
           {
-            "id": "nvidia/meta/llama-3.2-11b-vision-instruct",
-            "variant": "low"
-          }
+            "id": "opencode/glm-5.3-flash-free",
+            "variant": "high"
+          },
+          "opencode/mimo-v2.6-flash-free"
         ],
-        "variant": "medium",
         "skills": [],
         "mcps": [],
-        "description": "Visual analysis agent \u2014 images, PDFs, diagrams (read-only, NVIDIA vision models + opencode free tier)"
+        "description": "Visual analysis of images, PDFs, and diagrams (read-only, vision-capable free models)"
       }
     }
   }

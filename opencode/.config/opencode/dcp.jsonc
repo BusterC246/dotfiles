@@ -15,7 +15,7 @@
   },
   "turnProtection": {
     "enabled": true,
-    "turns": 4
+    "turns": 2
   },
   "experimental": {
     "allowSubAgents": true,
@@ -27,11 +27,11 @@
     "permission": "allow",
     "showCompression": false,
     "summaryBuffer": true,
-    "maxContextLimit": "75%",
-    "minContextLimit": "50%",
-    "nudgeFrequency": 5,
-    "iterationNudgeThreshold": 15,
-    "nudgeForce": "soft",
+    "maxContextLimit": 75000,
+    "minContextLimit": 45000,
+    "nudgeFrequency": 4,
+    "iterationNudgeThreshold": 12,
+    "nudgeForce": "strong",
     "protectedTools": [],
     "protectTags": false,
     "protectUserMessages": true
@@ -43,7 +43,7 @@
     },
     "purgeErrors": {
       "enabled": true,
-      "turns": 4,
+      "turns": 2,
       "protectedTools": []
     }
   }

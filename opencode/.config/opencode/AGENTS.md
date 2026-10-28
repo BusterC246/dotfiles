@@ -11,7 +11,7 @@ oh-my-opencode-slim provides these built-in agents. Skill assignments are config
 | `@orchestrator` | nemotron-3.5-super-vl-free | Slim orchestration agent — master delegator | `"*"` (all slim skills) |
 | `@sisyphus` | nemotron-3.5-super-vl-free | Main orchestration — ultrawork loop, goals, boulder state | ultrawork, memory, verification |
 | `@oracle` | nemotron-3-ultra-free | Strategic advisor, debugger, QA gate reviewer | simplify, verification |
-| `@explorer` | glm-5.3-flash-free | Codebase reconnaissance, external research | — |
+| `@explorer` | flint-40b-free | Codebase reconnaissance, external research | — |
 | `@librarian` | flint-40b-free | Documentation, code lookup, persistent memory | memory |
 | `@fixer` | deepseek-v4.1-flash-free | Fast implementation specialist — edits, TDD | refactor, verification |
 | `@designer` | nemotron-3.5-super-vl-free | UI/UX implementation and visual excellence | — |
@@ -418,7 +418,7 @@ Three community plugins are configured in `opencode.json` to reduce token usage 
 #### opencode-dcp (`@tarquinen/opencode-dcp@latest`)
 - Adds `compress` tool the model can invoke when tasks complete
 - Configurable: `~/.config/opencode/dcp.jsonc` for thresholds
-- For small-context free models: consider lowering `compress.minContextLimit`
+- Thresholds are set to absolute token counts (75k upper / 45k lower) so DCP compresses before the free-tier request-size limit and long before opencode's native compaction would kick in
 - Never mutates session history — only rewrites outgoing requests
 
 #### opencode-snip (`opencode-snip@latest`)
