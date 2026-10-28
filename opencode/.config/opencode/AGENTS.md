@@ -418,7 +418,7 @@ Three community plugins are configured in `opencode.json` to reduce token usage 
 #### opencode-dcp (`@tarquinen/opencode-dcp@latest`)
 - Adds `compress` tool the model can invoke when tasks complete
 - Configurable: `~/.config/opencode/dcp.jsonc` for thresholds
-- Thresholds are absolute token counts (80k upper / 50k lower) because percent thresholds resolve against a stale cached model limit; this compresses before the free-tier request-size limit and long before opencode's native compaction would kick in
+- Thresholds are percentages of each model's window (50% upper / 30% lower), so bigger-context models keep proportionally more room; per-model overrides are available via `modelMaxLimits`/`modelMinLimits`
 - Never mutates session history — only rewrites outgoing requests
 
 #### opencode-snip (`opencode-snip@latest`)

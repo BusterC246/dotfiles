@@ -27,11 +27,13 @@
     "permission": "allow",
     "showCompression": false,
     "summaryBuffer": true,
-    // Absolute token counts, not percentages: percent thresholds resolve
-    // against a stale cached model limit (upstream issue #658). Limits are
-    // request-size sensitive, so stay far below the model window.
-    "maxContextLimit": 80000,
-    "minContextLimit": 50000,
+    // Percentage thresholds scale with each model's window so large-context
+    // models keep their room: 200k models nudge at ~100k/60k, 262k models at
+    // ~131k/78k, 1M models at ~500k/300k. Percentages resolve against the
+    // cached model limit (upstream issue #658 warns it can be stale); pin a
+    // specific model with modelMaxLimits/modelMinLimits if a window misbehaves.
+    "maxContextLimit": "50%",
+    "minContextLimit": "30%",
     // Upstream defaults: fewer repeated nudges means less chance of a
     // compression loop (issue #573) and less raw context summarized away.
     "nudgeFrequency": 5,
