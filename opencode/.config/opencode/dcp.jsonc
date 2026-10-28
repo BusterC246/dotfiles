@@ -40,22 +40,20 @@
     "minContextLimit": "30%",
     // The free tier charges requests against a small rolling token bucket, not
     // the nominal context window. Measured on this account: successes up to
-    // 125k, a failure at 167k, and the same ~83k request passing and failing
-    // seconds apart (anomalyco/opencode#58751). A 500k request on a 1M model
-    // would never be served, so every free model whose window is larger than
-    // 200k is pinned to the range that actually gets answers. Delete a key to
-    // fall back to the percentage rule for that model.
+    // ~125k, failures at 167k and even ~84k once the bucket was drained
+    // (anomalyco/opencode#58751). A 500k request on a 1M model would never be
+    // served, so every free model whose window is larger than 200k is pinned
+    // to the band that usually answers; no fixed threshold guarantees it.
+    // Delete a key to fall back to the percentage rule for that model.
     "modelMaxLimits": {
       "opencode/beam-free": 100000,
       "opencode/flint-40b-free": 100000,
-      "opencode/nemotron-3-ultra-free": 100000,
       "opencode/nemotron-3.5-lightning-free": 100000,
       "opencode/nemotron-3.5-super-vl-free": 100000
     },
     "modelMinLimits": {
       "opencode/beam-free": 60000,
       "opencode/flint-40b-free": 60000,
-      "opencode/nemotron-3-ultra-free": 60000,
       "opencode/nemotron-3.5-lightning-free": 60000,
       "opencode/nemotron-3.5-super-vl-free": 60000
     },

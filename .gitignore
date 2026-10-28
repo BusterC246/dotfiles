@@ -61,3 +61,6 @@ opencode/.config/opencode/*.write-lock
 ece2300-format/
 
 *.bak
+
+# DCP runtime logs and context dumps (~/.config/opencode symlinks here)
+opencode/.config/opencode/logs/
