@@ -70,5 +70,14 @@ jobs:
             exit 1
           fi
 
+      - name: Reject runtime artifacts
+        run: |
+          found=$(git ls-files | grep -E '(^|/)logs/|service\.json$' || true)
+          if [ -n "$found" ]; then
+            echo "Runtime artifacts must not be tracked:"
+            printf '%s\n' "$found"
+            exit 1
+          fi
+
       - name: Stow into a throwaway HOME
         run: ./scripts/test-stow.sh
