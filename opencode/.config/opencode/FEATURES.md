@@ -12,19 +12,19 @@ No billing, API key, or subscription required.
 
 | Agent | Model Chain | Role | omo Equivalent |
 |-------|-------------|------|----------------|
-| `@sisyphus` | nemotron-3.5-super-vl-free → nemotron-3-ultra-free → deepseek-v4.1-flash-free → glm-5.3-flash-free | Main orchestration — ultrawork loop, goals, boulder state | Sisyphus |
-| `@hephaestus` | deepseek-v4.1-flash-free → nemotron-3.5-super-vl-free → glm-5.3-flash-free | Build/refactoring, code edits, TDD verification | Hephaestus |
-| `@prometheus` | nemotron-3-ultra-free → nemotron-3.5-super-vl-free → deepseek-v4.1-flash-free | Planning — work plans, boulder state, plan files | Prometheus (Planner) |
-| `@metis` | nemotron-3-ultra-free → nemotron-3.5-super-vl-free → deepseek-v4.1-flash-free | Plan consultation, architecture review | Metis (Plan Consultant) |
-| `@momus` | nemotron-3-ultra-free → nemotron-3.5-super-vl-free → deepseek-v4.1-flash-free | QA gate review, plan review, final approval (read-only) | Momus (Plan Reviewer) |
-| `@atlas` | nemotron-3.5-super-vl-free → deepseek-v4.1-flash-free → glm-5.3-flash-free | Execution of approved work plans | Atlas |
-| `@sisyphus-junior` | deepseek-v4.1-flash-free → glm-5.3-flash-free → flint-40b-free | Junior orchestration, notepad state | Sisyphus Junior |
-| `@multimodal-looker` | nemotron-3.5-super-vl-free → deepseek-v4.1-flash-free | Visual analysis — images, PDFs, diagrams (read-only) | Multimodal Looker |
-| `@oracle` | nemotron-3-ultra-free → nemotron-3.5-super-vl-free → deepseek-v4.1-flash-free | Debugging, architecture, QA gate reviewer | Oracle |
-| `@explorer` | glm-5.3-flash-free → deepseek-v4.1-flash-free → flint-40b-free | Codebase reconnaissance, research | Explore |
-| `@librarian` | flint-40b-free → glm-5.3-flash-free → deepseek-v4.1-flash-free | Documentation, code lookup, persistent memory | Librarian |
-| `@designer` | nemotron-3.5-super-vl-free → deepseek-v4.1-flash-free | UI/UX, visual excellence | Designer |
-| `@fixer` | deepseek-v4.1-flash-free → nemotron-3.5-super-vl-free → glm-5.3-flash-free | Implementation, refactoring, TDD | Fixer |
+| `@sisyphus` | nemotron-3.5-super-vl-free → deepseek-v4.1-flash-free → nemotron-3-ultra-free → flint-40b-free → beam-free | Main orchestration — ultrawork loop, goals, boulder state | Sisyphus |
+| `@hephaestus` | deepseek-v4.1-flash-free → flint-40b-free → nemotron-3.5-super-vl-free → mimo-v2.6-flash-free | Build/refactoring, code edits, TDD verification | Hephaestus |
+| `@prometheus` | deepseek-v4.1-flash-free → nemotron-3-ultra-free → nemotron-3.5-super-vl-free | Planning — work plans, boulder state, plan files | Prometheus (Planner) |
+| `@metis` | deepseek-v4.1-flash-free → nemotron-3-ultra-free → nemotron-3.5-super-vl-free | Plan consultation, architecture review | Metis (Plan Consultant) |
+| `@momus` | deepseek-v4.1-flash-free → nemotron-3-ultra-free → nemotron-3.5-super-vl-free | QA gate review, plan review, final approval (read-only) | Momus (Plan Reviewer) |
+| `@atlas` | deepseek-v4.1-flash-free → nemotron-3.5-super-vl-free → flint-40b-free → mimo-v2.6-flash-free | Execution of approved work plans | Atlas |
+| `@sisyphus-junior` | deepseek-v4.1-flash-free → glm-5.3-flash-free → flint-40b-free → mimo-v2.6-flash-free → nemotron-3.5-super-vl-free | Junior orchestration, notepad state | Sisyphus Junior |
+| `@multimodal-looker` | nemotron-3.5-super-vl-free → deepseek-v4.1-flash-free → glm-5.3-flash-free → mimo-v2.6-flash-free | Visual analysis — images, PDFs, diagrams (read-only) | Multimodal Looker |
+| `@oracle` | deepseek-v4.1-flash-free → nemotron-3-ultra-free → nemotron-3.5-super-vl-free → flint-40b-free | Debugging, architecture, QA gate reviewer | Oracle |
+| `@explorer` | flint-40b-free → nemotron-3.5-lightning-free → beam-free → deepseek-v4.1-flash-free | Codebase reconnaissance, research | Explore |
+| `@librarian` | flint-40b-free → beam-free → glm-5.3-flash-free → deepseek-v4.1-flash-free | Documentation, code lookup, persistent memory | Librarian |
+| `@designer` | nemotron-3.5-super-vl-free → deepseek-v4.1-flash-free → glm-5.3-flash-free → mimo-v2.6-flash-free | UI/UX, visual excellence | Designer |
+| `@fixer` | deepseek-v4.1-flash-free → mimo-v2.6-flash-free → flint-40b-free → glm-5.3-flash-free → nemotron-3.5-super-vl-free | Implementation, refactoring, TDD | Fixer |
 
 All agents use **fallback chains** (arrays) — if the primary model is rate-limited, the next in
 chain is tried automatically. Models can be swapped by editing the preset.
@@ -119,7 +119,7 @@ chain is tried automatically. Models can be swapped by editing the preset.
 | Model ID | Use | Cost |
 |----------|-----|------|
 | `opencode/nemotron-3.5-super-vl-free` | Orchestrator, designer, vision tasks | $0 / $0 |
-| `opencode/nemotron-3-ultra-free` | Oracle, planner, QA review | $0 / $0 |
+| `opencode/nemotron-3-ultra-free` | Fallback for review and planning agents | $0 / $0 |
 | `opencode/deepseek-v4.1-flash-free` | Implementation, refactoring | $0 / $0 |
 | `opencode/glm-5.3-flash-free` | Exploration, small tasks | $0 / $0 |
 | `opencode/flint-40b-free` | Documentation, memory | $0 / $0 |

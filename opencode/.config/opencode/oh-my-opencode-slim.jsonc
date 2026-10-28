@@ -70,7 +70,13 @@
     "presets": {
       "default": {
         "orchestrator": {
-          "model": "opencode/nemotron-3-ultra-free"
+          "model": [
+            {
+              "id": "opencode/nemotron-3.5-super-vl-free",
+              "variant": "high"
+            },
+            "opencode/nemotron-3-ultra-free"
+          ]
         },
         "councillor-deepseek": {
           "model": "opencode/deepseek-v4.1-flash-free",
@@ -326,6 +332,22 @@
         ],
         "mcps": [],
         "description": "Implementation specialist — refactoring, edits, TDD verification (strongest coder first)"
+      },
+      "council": {
+        "model": [
+          {
+            "id": "opencode/nemotron-3.5-super-vl-free",
+            "variant": "high"
+          },
+          {
+            "id": "opencode/deepseek-v4.1-flash-free",
+            "variant": "high"
+          },
+          "opencode/nemotron-3-ultra-free"
+        ],
+        "skills": [],
+        "mcps": [],
+        "description": "Council synthesizer — merges parallel councillor answers (vision, 1M context, strongest coder as fallback)"
       },
       "designer": {
         "model": [

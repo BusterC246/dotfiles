@@ -10,18 +10,18 @@ oh-my-opencode-slim provides these built-in agents. Skill assignments are config
 |-------|-------|------|--------|
 | `@orchestrator` | nemotron-3.5-super-vl-free | Slim orchestration agent — master delegator | `"*"` (all slim skills) |
 | `@sisyphus` | nemotron-3.5-super-vl-free | Main orchestration — ultrawork loop, goals, boulder state | ultrawork, memory, verification |
-| `@oracle` | nemotron-3-ultra-free | Strategic advisor, debugger, QA gate reviewer | simplify, verification |
+| `@oracle` | deepseek-v4.1-flash-free | Strategic advisor, debugger, QA gate reviewer | simplify, verification |
 | `@explorer` | flint-40b-free | Codebase reconnaissance, external research | — |
 | `@librarian` | flint-40b-free | Documentation, code lookup, persistent memory | memory |
 | `@fixer` | deepseek-v4.1-flash-free | Fast implementation specialist — edits, TDD | refactor, verification |
 | `@designer` | nemotron-3.5-super-vl-free | UI/UX implementation and visual excellence | — |
 | `@hephaestus` | deepseek-v4.1-flash-free | Build agent — refactoring, code edits, build/verify | refactor, verification |
-| `@prometheus` | nemotron-3-ultra-free | Planning — work plans, boulder state, plan files | ultrawork, memory |
-| `@metis` | nemotron-3-ultra-free | Plan consultation, architecture review | memory, verification |
-| `@momus` | nemotron-3-ultra-free | QA gate review — plan review, final approval (read-only) | verification |
-| `@atlas` | nemotron-3.5-super-vl-free | Execution agent — carries out approved work plans | ultrawork, refactor, verification |
+| `@prometheus` | deepseek-v4.1-flash-free | Planning — work plans, boulder state, plan files | ultrawork, memory |
+| `@metis` | deepseek-v4.1-flash-free | Plan consultation, architecture review | memory, verification |
+| `@momus` | deepseek-v4.1-flash-free | QA gate review — plan review, final approval (read-only) | verification |
+| `@atlas` | deepseek-v4.1-flash-free | Execution agent — carries out approved work plans | ultrawork, refactor, verification |
 | `@sisyphus-junior` | deepseek-v4.1-flash-free | Junior orchestration — assisted task execution | refactor |
-| `@multimodal-looker` | nemotron-3.5-super-vl-free | Visual analysis — images, PDFs, diagrams (read-only, NVIDIA vision only) | — |
+| `@multimodal-looker` | nemotron-3.5-super-vl-free | Visual analysis — images, PDFs, diagrams (read-only) | — |
 
 ### Slim Built-in Skills
 
