@@ -246,8 +246,8 @@ hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true 
 hl.bind("XF86audiostop", hl.dsp.exec_cmd("playerctl stop"), { locked = true })
 
 -- Screenshot
-hl.bind("Print", hl.dsp.exec_cmd('grim -g "$(slurp -d)"'))
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd('grim -g "$(slurp -d)"'))
+hl.bind("Print", hl.dsp.exec_cmd('sel="$(slurp -d)" && [ -n "$sel" ] && grim -g "$sel" - | tee "$GRIM_DEFAULT_DIR/$(date +%Y%m%d_%Hh%Mm%Ss)_grim.png" | wl-copy -t image/png'))
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd('sel="$(slurp -d)" && [ -n "$sel" ] && grim -g "$sel" - | tee "$GRIM_DEFAULT_DIR/$(date +%Y%m%d_%Hh%Mm%Ss)_grim.png" | wl-copy -t image/png'))
 
 require("env")
 require("autostart")
