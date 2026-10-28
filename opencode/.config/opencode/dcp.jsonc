@@ -15,7 +15,7 @@
   },
   "turnProtection": {
     "enabled": true,
-    "turns": 2
+    "turns": 3
   },
   "experimental": {
     "allowSubAgents": true,
@@ -27,11 +27,16 @@
     "permission": "allow",
     "showCompression": false,
     "summaryBuffer": true,
-    "maxContextLimit": 75000,
-    "minContextLimit": 45000,
-    "nudgeFrequency": 4,
-    "iterationNudgeThreshold": 12,
-    "nudgeForce": "strong",
+    // Absolute token counts, not percentages: percent thresholds resolve
+    // against a stale cached model limit (upstream issue #658). Limits are
+    // request-size sensitive, so stay far below the model window.
+    "maxContextLimit": 80000,
+    "minContextLimit": 50000,
+    // Upstream defaults: fewer repeated nudges means less chance of a
+    // compression loop (issue #573) and less raw context summarized away.
+    "nudgeFrequency": 5,
+    "iterationNudgeThreshold": 15,
+    "nudgeForce": "soft",
     "protectedTools": [],
     "protectTags": false,
     "protectUserMessages": true
@@ -43,7 +48,7 @@
     },
     "purgeErrors": {
       "enabled": true,
-      "turns": 2,
+      "turns": 4,
       "protectedTools": []
     }
   }
