@@ -262,11 +262,11 @@
       },
       "oracle": {
         "model": [
-          "opencode/nemotron-3-ultra-free",
           {
             "id": "opencode/deepseek-v4.1-flash-free",
             "variant": "high"
           },
+          "opencode/nemotron-3-ultra-free",
           {
             "id": "opencode/nemotron-3.5-super-vl-free",
             "variant": "high"
@@ -281,7 +281,7 @@
           "verification"
         ],
         "mcps": [],
-        "description": "Strategic advisor, debugger, and QA gate reviewer (deepest reasoning and 1M context first)"
+        "description": "Strategic advisor, debugger, and QA gate reviewer (strongest coder first, deepest reasoning fallback)"
       },
       "explorer": {
         "model": [
@@ -428,11 +428,11 @@
       },
       "prometheus": {
         "model": [
-          "opencode/nemotron-3-ultra-free",
           {
             "id": "opencode/deepseek-v4.1-flash-free",
             "variant": "high"
           },
+          "opencode/nemotron-3-ultra-free",
           {
             "id": "opencode/nemotron-3.5-super-vl-free",
             "variant": "high"
@@ -447,11 +447,11 @@
       },
       "metis": {
         "model": [
-          "opencode/nemotron-3-ultra-free",
           {
             "id": "opencode/deepseek-v4.1-flash-free",
             "variant": "high"
           },
+          "opencode/nemotron-3-ultra-free",
           {
             "id": "opencode/nemotron-3.5-super-vl-free",
             "variant": "high"
@@ -469,11 +469,11 @@
       },
       "momus": {
         "model": [
-          "opencode/nemotron-3-ultra-free",
           {
             "id": "opencode/deepseek-v4.1-flash-free",
             "variant": "high"
           },
+          "opencode/nemotron-3-ultra-free",
           {
             "id": "opencode/nemotron-3.5-super-vl-free",
             "variant": "high"
