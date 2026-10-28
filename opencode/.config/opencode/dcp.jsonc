@@ -13,9 +13,12 @@
     "enabled": false,
     "automaticStrategies": true
   },
+  // Keep the last four turns of tool output verbatim; this is upstream's
+  // documented value for the guard, and it keeps an agent from compressing the
+  // file it is still editing.
   "turnProtection": {
     "enabled": true,
-    "turns": 3
+    "turns": 4
   },
   "experimental": {
     "allowSubAgents": true,
@@ -26,21 +29,47 @@
     "mode": "range",
     "permission": "allow",
     "showCompression": false,
+    // Summary tokens extend the effective ceiling, so repeated compression
+    // does not make the threshold drift downward.
     "summaryBuffer": true,
-    // Percentage thresholds scale with each model's window so large-context
-    // models keep their room: 200k models nudge at ~100k/60k, 262k models at
-    // ~131k/78k, 1M models at ~500k/300k. Percentages resolve against the
-    // cached model limit (upstream issue #658 warns it can be stale); pin a
-    // specific model with modelMaxLimits/modelMinLimits if a window misbehaves.
+    // Global rule scales with the window: 200k -> 100k/60k, 262k -> 131k/78k,
+    // 1M -> 500k/300k. Percentages resolve against the limit DCP cached from
+    // the provider catalog; upstream #658 shows that cache can go stale, which
+    // is why the free models below are pinned with absolute token counts.
     "maxContextLimit": "50%",
     "minContextLimit": "30%",
+    // The free tier charges requests against a small rolling token bucket, not
+    // the nominal context window. Measured on this account: successes up to
+    // 125k, a failure at 167k, and the same ~83k request passing and failing
+    // seconds apart (anomalyco/opencode#58751). A 500k request on a 1M model
+    // would never be served, so every free model whose window is larger than
+    // 200k is pinned to the range that actually gets answers. Delete a key to
+    // fall back to the percentage rule for that model.
+    "modelMaxLimits": {
+      "opencode/beam-free": 100000,
+      "opencode/flint-40b-free": 100000,
+      "opencode/nemotron-3-ultra-free": 100000,
+      "opencode/nemotron-3.5-lightning-free": 100000,
+      "opencode/nemotron-3.5-super-vl-free": 100000
+    },
+    "modelMinLimits": {
+      "opencode/beam-free": 60000,
+      "opencode/flint-40b-free": 60000,
+      "opencode/nemotron-3-ultra-free": 60000,
+      "opencode/nemotron-3.5-lightning-free": 60000,
+      "opencode/nemotron-3.5-super-vl-free": 60000
+    },
     // Upstream defaults: fewer repeated nudges means less chance of a
     // compression loop (issue #573) and less raw context summarized away.
+    // Soft keeps compression at task boundaries, which produces better
+    // summaries than a forced mid-task pass.
     "nudgeFrequency": 5,
     "iterationNudgeThreshold": 15,
     "nudgeForce": "soft",
     "protectedTools": [],
     "protectTags": false,
+    // User messages are the highest-signal content in the transcript; keeping
+    // them verbatim prevents summary drift.
     "protectUserMessages": true
   },
   "strategies": {

@@ -207,8 +207,7 @@
     "auto": true,
     "keep": {
       "tokens": 24000
-    },
-    "buffer": 16000
+    }
   },
   "provider": {
     "opencode": {
